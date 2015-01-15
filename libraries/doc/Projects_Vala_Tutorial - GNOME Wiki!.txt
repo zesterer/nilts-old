@@ -1,0 +1,1189 @@
+  * Projects </Projects>/Vala </Projects/Vala>/Tutorial
+    </Projects/Vala/Tutorial>
+  * Home </Home>
+  * RecentChanges </RecentChanges>
+  * Schedule </Schedule>
+  * Login </action/login/Projects/Vala/Tutorial?action=login>
+
+GNOME.org <https://www.gnome.org/>
+
+
+  Vala Tutorial
+
+Contents
+
+ 1. Vala Tutorial <#Vala_Tutorial>
+     1. Introduction <#Introduction>
+         1. What is Vala? <#What_is_Vala.3F>
+         2. Who is this tutorial for? <#Who_is_this_tutorial_for.3F>
+         3. Conventions <#Conventions>
+     2. A First Program <#A_First_Program>
+         1. Compile and Run <#Compile_and_Run>
+     3. Basics <#Basics>
+         1. Source Files and Compilation <#Source_Files_and_Compilation>
+         2. Syntax Overview <#Syntax_Overview>
+         3. Comments <#Comments>
+         4. Data Types <#Data_Types>
+             1. Value Types <#Value_Types>
+             2. Strings <#Strings>
+             3. Arrays <#Arrays>
+             4. Reference Types <#Reference_Types>
+             5. Static Type Casting <#Static_Type_Casting>
+             6. Type Inference <#Type_Inference>
+             7. Defining new Type from other <#Defining_new_Type_from_other>
+         5. Operators <#Operators>
+         6. Control Structures <#Control_Structures>
+         7. Language Elements <#Language_Elements>
+             1. Methods <#Methods>
+             2. Delegates <#Delegates>
+             3. Anonymous Methods / Closures
+                <#Anonymous_Methods_.2BAC8_Closures>
+             4. Namespaces <#Namespaces>
+             5. Structs <#Structs>
+             6. Classes <#Classes>
+             7. Interfaces <#Interfaces>
+         8. Code Attributes <#Code_Attributes>
+     4. Object Oriented Programming <#Object_Oriented_Programming>
+         1. Basics <#Basics-1>
+         2. Construction <#Construction>
+         3. Destruction <#Destruction>
+         4. Signals <#Signals>
+         5. Properties <#Properties>
+         6. Inheritance <#Inheritance>
+         7. Abstract Classes <#Abstract_Classes>
+             1. Virtual Methods <#Virtual_Methods>
+         8. Interfaces <#Interfaces-1>
+             1. Defining Prerequisites <#Defining_Prerequisites>
+             2. Defining default implementation in methods
+                <#Defining_default_implementation_in_methods>
+             3. Properties <#Properties-1>
+             4. Mixins and Multiple Inheritance
+                <#Mixins_and_Multiple_Inheritance>
+         9. Polymorphism <#Polymorphism>
+        10. Method Hiding <#Method_Hiding>
+        11. Run-Time Type Information <#Run-Time_Type_Information>
+        12. Dynamic Type Casting <#Dynamic_Type_Casting>
+        13. Generics <#Generics>
+        14. GObject-Style Construction <#GObject-Style_Construction>
+     5. Advanced Features <#Advanced_Features>
+         1. Assertions and Contract Programming
+            <#Assertions_and_Contract_Programming>
+         2. Error Handling <#Error_Handling>
+         3. Parameter Directions <#Parameter_Directions>
+         4. Collections <#Collections>
+             1. ArrayList<G> <#ArrayList.3CG.3E>
+             2. HashMap<K,V> <#HashMap.3CK.2CV.3E>
+             3. HashSet<G> <#HashSet.3CG.3E>
+             4. Read-Only Views <#Read-Only_Views>
+         5. Methods With Syntax Support <#Methods_With_Syntax_Support>
+         6. Multi-Threading <#Multi-Threading>
+             1. Threads in Vala <#Threads_in_Vala>
+             2. Resource Control <#Resource_Control>
+         7. The Main Loop <#The_Main_Loop>
+         8. Asynchronous Methods <#Asynchronous_Methods>
+             1. Examples <#Examples>
+         9. Weak References <#Weak_References>
+        10. Ownership <#Ownership>
+             1. Unowned References <#Unowned_References>
+             2. Ownership Transfer <#Ownership_Transfer>
+        11. Variable-Length Argument Lists <#Variable-Length_Argument_Lists>
+        12. Pointers <#Pointers>
+        13. Non-Object classes <#Non-Object_classes>
+        14. D-Bus Integration <#D-Bus_Integration>
+        15. Profiles <#Profiles>
+     6. Experimental Features <#Experimental_Features>
+         1. Chained Relational Expressions <#Chained_Relational_Expressions>
+         2. Regular Expression Literals <#Regular_Expression_Literals>
+         3. Strict Non-Null Mode <#Strict_Non-Null_Mode>
+     7. Libraries <#Libraries>
+         1. Using Libraries <#Using_Libraries>
+         2. Creating a Library <#Creating_a_Library>
+             1. Using Autotools <#Using_Autotools>
+             2. Compilation and linking using Command Line
+                <#Compilation_and_linking_using_Command_Line>
+         3. Binding Libraries with VAPI Files
+            <#Binding_Libraries_with_VAPI_Files>
+     8. Tools <#Tools>
+         1. valac <#valac>
+         2. vapigen <#vapigen>
+         3. vala-gen-introspect <#vala-gen-introspect>
+     9. Techniques <#Techniques>
+         1. Debugging <#Debugging>
+         2. Using GLib <#Using_GLib>
+             1. File Handling <#File_Handling>
+
+
+    Introduction
+
+Disclaimer: Vala is an ongoing project, and its features may change. I
+will try to keep this tutorial as up to date as I can, but I'm not
+perfect. Also, I can't promise that the techniques which I suggest are
+necessarily the best in practice, but again I will try to keep up with
+that sort of thing.
+
+
+      What is Vala?
+
+Vala is a new programming language that allows modern programming
+techniques to be used to write applications that run on the GNOME
+runtime libraries, particularly GLib and GObject. This platform has long
+provided a very complete programming environment, with such features as
+a dynamic type system and assisted memory management. Before Vala, the
+only ways to program for the platform were with the machine native C
+API, which exposes a lot of often unwanted detail, with a high level
+language that has an attendant virtual machine, such as Python or the
+Mono C# language, or alternatively, with C++ through a wrapper library.
+
+Vala is different from all these other techniques, as it outputs C code
+which can be compiled to run with no extra library support beyond the
+GNOME platform. This has several consequences, but most importantly:
+
+  * Programs written in Vala should have broadly similar performance to
+    those written directly in C, whilst being easier and faster to write
+    and maintain.
+  * A Vala application can do nothing that a C equivalent cannot. Whilst
+    Vala introduces a lot of language features that are not available in
+    C, these are all mapped to C constructs, although they are often
+    ones that are difficult or too time consuming to write directly. 
+
+As such, whilst Vala is a modern language with all of the features you
+would expect, it gains its power from an existing platform, and must in
+some ways comply with the rules set down by it.
+
+
+      Who is this tutorial for?
+
+This tutorial will not go into depth about basic programming practices.
+It will only briefly explain the principles of object-oriented
+programming, instead focusing on how Vala applies the concepts. As such
+it will be helpful if you have experience of a variety of programming
+languages already, although in-depth knowledge of any particular one is
+not required.
+
+Vala shares a lot of syntax with C#, but I will try to avoid describing
+features in terms of their similarity or differences with either C# or
+Java, with the aim of making the tutorial more accessible.
+
+What will be useful is a reasonable understanding of C. Whilst this
+isn't needed for understanding Vala per se, it is important to realise
+that Vala programs are executed as C, and will often interact with C
+libraries. Knowledge of C will certainly make a deeper understanding of
+Vala far easier to come by.
+
+
+      Conventions
+
+Code will be in monospaced text, commands will all be prefaced with a $
+prompt. Other than that, everything should be obvious. I tend to code
+very explicitly, including some information that is actually implied. I
+will try to explain where some things can be omitted, but that doesn't
+mean that I encourage you do to this.
+
+At some point I will add in references to the Vala documentation, but
+that isn't really possible yet.
+
+
+    A First Program
+
+Sadly predictable, but still:
+
+class Demo.HelloWorld : GLib.Object {
+
+    public static int main(string[] args) {
+
+        stdout.printf("Hello, World\n");
+
+        return 0;
+    }
+}
+
+Of course, that is a Vala /Hello World/ program. I expect you can
+recognise some parts of it well enough, but just to be thorough I shall
+go through it step by step.
+
+class Demo.HelloWorld : GLib.Object {
+
+This line identifies the beginning of a class definition. Classes in
+Vala are very similar in concept to other languages. A class is
+basically a type of object, of which instances can be created, all
+having the same properties. The implementation of classed types is taken
+care of by the /gobject/ library, but details of this are not important
+for general usage.
+
+What is important to note is that this class is specifically described
+as being a subclass of /GLib.Object/. This is because Vala allows other
+types of class, but in most cases, this is the sort that you want. In
+fact, some language features of Vala are only allowed if your class is
+descended from GLib's /Object/.
+
+Other parts of this line show namespacing and fully qualified names,
+although these will be explained later.
+
+public static int main(string[] args) {
+
+This is the start of a method definition. A method is a function related
+to a type of object that can be executed on an object of that type. The
+static method means that the method can be called without possessing a
+particular instance of the type. The fact that this method is called
+/main/ and has the signature it does means that Vala will recognise it
+as the entry point for the program.
+
+The /main/ method doesn't have to be defined inside a class. However, if
+it is defined inside a class it must be static. It doesn't matter if
+it's public or private. The return type may be either int or void. With
+a void return type the program will implicitly terminate with exit code
+0. The string array parameter holding the command line arguments is
+optional.
+
+stdout.printf("Hello, World\n");
+
+/stdout/ is an object in the /GLib/ namespace that Vala ensures you have
+access to whenever required. This line instructs Vala to execute the
+method called /printf/ of the /stdout/ object, with the hello string as
+an argument. In Vala, this is always the syntax you use to call a method
+on an object, or to access an object's data. \n is the escape sequence
+for a new line.
+
+return 0;
+
+return is to return a value to the caller and terminate the execution of
+the /main/ method which also terminates the execution of the program.
+The returned value of the /main/ method is then taken as the exit code
+of the program.
+
+The last lines simply end the definitions of the method and class.
+
+
+      Compile and Run
+
+Assuming you have Vala installed, then all it takes to compile and
+execute this program is:
+
+$ valac hello.vala
+$ ./hello
+
+/valac/ is the Vala compiler, which will compile your Vala code into a
+binary. The resulting binary will have the same name as the source file
+and can then be directly executed on the machine. You can probably guess
+the output.
+
+
+    Basics
+
+
+      Source Files and Compilation
+
+Vala code is written in files with /.vala/ extensions. Vala does not
+enforce as much structure as a language like Java - there are no
+concepts of packages or class files in the same way. Instead structure
+is defined by text inside each file, describing the logical location of
+the code with constructs such as namespaces. When you want to compile
+Vala code, you give the compiler a list of the files required, and Vala
+will work out how they fit together.
+
+The upshot of all this is that you can put as many classes or functions
+into a file as you want, even combining parts of different namespaces in
+together. This is not necessarily a good idea. There are certain
+conventions you probably want to follow. A good example of how to
+structure a project in Vala is the Vala project itself.
+
+All source files for the same package are supplied as command line
+parameters to the Vala compiler valac, along with compiler flags. This
+works similarly to how Java source code is compiled. For example:
+
+$ valac compiler.vala --pkg libvala
+
+will produce a binary with the name /compiler/ that links with the
+package /libvala/. In fact, this is how the /valac/ compiler is produced!
+
+If you want the binary to have a different name or if you have passed
+multiple source files to the compiler you can specify the binary name
+explicitly with the -o switch:
+
+$ valac source1.vala source2.vala -o myprogram
+$ ./myprogram
+
+If you give /valac/ the -C switch, it won't compile your program into a
+binary file. Instead it will output the intermediate C code for each of
+your Vala source files into a corresponding C source file, in this case
+/source1.c/ and /source2.c/. If you look at the content of these files
+you can see that programming a class in Vala is equivalent to the same
+task in C, but a whole lot more succinct. You will also notice that this
+class is registered dynamically in the running system. This is a good
+example of the power of the GNOME platform, but as I've said before, you
+do not need to know much about this to use Vala.
+
+If you want to have a C header file for your project you can use the -H
+switch:
+
+$ valac hello.vala -C -H hello.h
+
+
+      Syntax Overview
+
+Vala's syntax is an amalgam heavily based on C#'s. As a result, most of
+this will be familiar to programmers who know any C-like language, and
+in light of this I have kept things brief.
+
+Scope is defined using braces. An object or reference is only valid
+between { and }. These are also the delimiters used to define classes,
+methods, code blocks etc, so they automatically have their own scope.
+Vala is not strict about where variables are declared.
+
+An identifier is defined by its type and a name, e.g. int c meaning an
+integer called /c/. In the case of value types this also creates an
+object of the given type. For reference types these just define a new
+reference that doesn't initially point to anything.
+
+Identifier names may be any combination of letters ([a-z], [A-Z]),
+underscores and digits. However, to define or refer to an identifier
+with a name that either starts with a digit or is a keyword, you must
+prefix it with the '@' character. This character is not considered a
+part of the name. For example, you can name a method /foreach/ by
+writing @foreach, even though this is a reserved Vala keyword. You can
+omit the '@' character when it can be unambiguously interpreted as an
+identifier name, such as in "foo.foreach()".
+
+Reference types are instantiated using the new operator and the name of
+a construction method, which is usually just the name of the type, e.g.
+Object o = new Object() creates a new Object and makes /o/ a reference
+to it.
+
+
+      Comments
+
+Vala allows comments in code in different ways.
+
+// Comment continues until end of line
+
+/* Comment lasts between delimiters */
+
+/**
+ * Documentation comment
+ */
+
+These are handled in the same way as in most other languages and so need
+little explanation. Documentation comments are actually not special to
+Vala, but a documentation generation tool like Valadoc
+</Projects/Valadoc> will recognise them.
+
+
+      Data Types
+
+Broadly speaking there are two types of data in Vala: /reference types/
+and /value types/. These names describe how instances of the types are
+passed around the system - a value type is copied whenever it is
+assigned to a new identifier, a reference type is not copied, instead
+the new identifier is simply a new reference to the same object.
+
+A constant is defined by putting const before the type. The naming
+convention for constants is ALL_UPPER_CASE.
+
+
+        Value Types
+
+Vala supports a set of the simple types as most other languages do.
+
+  *
+
+    Byte, char, uchar; their names are /char/ for historical reasons.
+
+  *
+
+    Character, unichar; a 32-bit Unicode character
+
+  *
+
+    Integer, int, uint
+
+  *
+
+    Long Integer, long, ulong
+
+  *
+
+    Short Integer, short, ushort
+
+  *
+
+    Guaranteed-size Integer, int8, int16, int32, int64 as well as their
+    unsigned siblings uint8, uint16, uint32, uint64. The numbers
+    indicate the lengths in bits.
+
+  *
+
+    Float number, float, double
+
+  *
+
+    Boolean, bool; possible values are true and false
+
+  *
+
+    Compound, struct
+
+  *
+
+    Enumeration, enum; represented by integer values, not as classes
+    like Java's enums
+
+Here are some examples.
+
+/* atomic types */
+unichar c = 'u';
+float percentile = 0.75f;
+const double MU_BOHR = 927.400915E-26;
+bool the_box_has_crashed = false;
+
+/* defining a struct */
+struct Vector {
+    public double x;
+    public double y;
+    public double z;
+}
+
+/* defining an enum */
+enum WindowType {
+    TOPLEVEL,
+    POPUP
+}
+
+Most of these types may have different sizes on different platforms,
+except for the guaranteed-size integer types. The sizeof operator
+returns the size that a variable of a given type occupies in bytes:
+
+ulong nbytes = sizeof(int32);    // nbytes will be 4 (= 32 bits)
+
+You can determine the minimum and maximum values of a numerical type
+with /.MIN/ and /.MAX/, e.g. int.MIN and int.MAX.
+
+
+        Strings
+
+The data type for strings is string. Vala strings are UTF-8 encoded and
+immutable.
+
+string text = "A string literal";
+
+Vala offers a feature called /verbatim strings/. These are strings in
+which escape sequences (such as \n) won't be interpreted, line breaks
+will be preserved and quotation marks don't have to be masked. They are
+enclosed with triple double quotation marks. Possible indentations after
+a line break are part of the string as well.
+
+string verbatim = """This is a so-called "verbatim string".
+Verbatim strings don't process escape sequences, such as \n, \t, \\, etc.
+They may contain quotes and may span multiple lines.""";
+
+Strings prefixed with '@' are string templates. They can evaluate
+embedded variables and expressions prefixed with '$':
+
+int a = 6, b = 7;
+string s = @"$a * $b = $(a * b)";  // => "6 * 7 = 42"
+
+The equality operators == and != compare the content of two strings,
+contrary to Java's behaviour which in this case would check for
+referential equality.
+
+You can slice a string with [start:end]. Negative values represent
+positions relative to the end of the string:
+
+string greeting = "hello, world";
+string s1 = greeting[7:12];        // => "world"
+string s2 = greeting[-4:-2];       // => "or"
+
+Note that indices in Vala start with 0 as in most other programming
+languages. Starting with Vala 0.11 you can access a single byte of a
+string with [index]:
+
+uint8 b = greeting[7];             // => 0x77
+
+However, you cannot assign a new byte value to this position, since Vala
+strings are immutable.
+
+Many of the basic types have reasonable methods for parsing from and
+converting to strings, for example:
+
+bool b = bool.parse("false");           // => false
+int i = int.parse("-52");               // => -52
+double d = double.parse("6.67428E-11"); // => 6.67428E-11
+string s1 = true.to_string();           // => "true"
+string s2 = 21.to_string();             // => "21"
+
+Two useful methods for writing and reading strings to/from the console
+(and for your first explorations with Vala) are /stdout.printf()/ and
+/stdin.read_line()/:
+
+stdout.printf("Hello, world\n");
+stdout.printf("%d %g %s\n", 42, 3.1415, "Vala");
+string input = stdin.read_line();
+int number = int.parse(stdin.read_line());
+
+You already know /stdout.printf()/ from the /Hello World/ example.
+Actually, it can take an arbitrary number of arguments of different
+types, whereas the first argument is a /format string/, following the
+same rules as C format strings <http://en.wikipedia.org/wiki/Printf>. If
+you must output an error message you can use /stderr.printf()/ instead
+of /stdout.printf()/.
+
+In addition the /in/ operation can be used to determine whether one
+string contains another, e.g.
+
+if ("ere" in "Able was I ere I saw Elba.") ...
+
+For more information, please report to the complete overview of the
+string class <http://www.valadoc.org/glib-2.0/string.html>.
+
+A sample program </Projects/Vala/StringSample> demonstrating string
+usage is also available.
+
+
+        Arrays
+
+An array is declared by giving a type name followed by [] and created by
+using the new operator e.g. int[] a = new int[10] to create an array of
+integers. The length of such an array can be obtained by the /length/
+member variable e.g. int count = a.length. Note that if you write
+Object[] a = new Object[10] no objects will be created, just the array
+to store them in.
+
+int[] a = new int[10];
+int[] b = { 2, 4, 6, 8 };
+
+You can slice an array with [start:end]:
+
+int[] c = b[1:3];     // => { 4, 6 }
+
+Slicing an array will result in a reference to the requested data, not a
+copy. However, assigning the slice to an owned variable (as is done
+above) will result in a copy. If you would like to avoid a copy, you
+must either assign the slice to an unowned array or pass it directly to
+an argument (arguments are, by default, unowned):
+
+unowned int[] c = b[1:3];     // => { 4, 6 }
+
+Multi-dimensional arrays are defined with [,] or [,,] etc.
+
+int[,] c = new int[3,4];
+int[,] d = {{2, 4, 6, 8},
+            {3, 5, 7, 9},
+            {1, 3, 5, 7}};
+d[2,3] = 42;
+
+This sort of array is represented by a single contiguous memory block.
+Jagged multi-dimensional arrays ([][], also known as "stacked arrays" or
+"arrays of arrays"), where each row may have a different length, are not
+yet supported.
+
+To find the length of each dimension in a multi-dimensional array, the
+/length/ member becomes an array, storing the length of each respective
+dimension.
+
+int[,] arr = new int[4,5];
+int r = arr.length[0];
+int c = arr.length[1];
+
+Please note that you can't get a mono-dimensional array from a
+multidimensional array, or even slice a multidimensional array:
+
+int[,] arr = {{1,2},
+                {3,4}};
+int[] b = arr[0];  // won't work
+int[] c = arr[0,];  // won't work
+int[] d = arr[:,0];  // won't work
+int[] e = arr[0:1,0];  // won't work
+int[,] f = arr[0:1,0:1];  // won't work
+
+You can append array elements dynamically with the += operator. However,
+this works only for locally defined or private arrays. The array is
+automatically reallocated if needed. Internally this reallocation
+happens with sizes growing in powers of 2 for run-time efficiency
+reasons. However, .length holds the actual number of elements, not the
+internal size.
+
+int[] e = {};
+e += 12;
+e += 5;
+e += 37;
+
+You can resize an array by calling /resize()/ on it. It will keep the
+original content (as much as fits).
+
+int[] a = new int[5];
+a.resize(12);
+
+If you put the square brackets /after/ the identifier together with an
+indication of size you will get a fixed-size array. Fixed-size arrays
+are allocated on the stack (if used as local variables) or in-line
+allocated (if used as fields) and you can't reallocate them later.
+
+int f[10];     // no 'new ...'
+
+Vala does not do any bounds checking for array access at runtime. If you
+need more safety you should use a more sophisticated data structure like
+an /ArrayList/. You will learn more about that later in the section
+about /collections/.
+
+
+        Reference Types
+
+The reference types are all types declared as a class, regardless of
+whether they are descended from GLib's /Object/ or not. Vala will ensure
+that when you pass an object by reference the system will keep track of
+the number of references currently alive in order to manage the memory
+for you. The value of a reference that does not point anywhere is null.
+More on classes and their features in the section about object oriented
+programming.
+
+/* defining a class */
+class Track : GLib.Object {             /* subclassing 'GLib.Object' */
+    public double mass;                 /* a public field */
+    public double name { get; set; }    /* a public property */
+    private bool terminated = false;    /* a private field */
+    public void terminate() {           /* a public method */
+        terminated = true;
+    }
+}
+
+
+        Static Type Casting
+
+In Vala, you can cast a variable from one type to another. For a static
+type cast, a variable is casted by the desired type name with
+parenthesis. A static cast doesn't impose any runtime type safety
+checking. It works for all Vala types. For example,
+
+int i = 10;
+float j = (float) i;
+
+Vala supports another casting mechanism called /dynamic cast/ which
+performs runtime type checking and is described in the section about
+object oriented programming.
+
+
+        Type Inference
+
+Vala has a mechanism called /type inference/, whereby a local variable
+may be defined using var instead of giving a type, so long as it is
+unambiguous what type is meant. The type is inferred from the right hand
+side of the assignment. It helps reduce unnecessary redundancy in your
+code without sacrificing static typing:
+
+var p = new Person();     // same as: Person p = new Person();
+var s = "hello";          // same as: string s = "hello";
+var l = new List<int>();  // same as: List<int> l = new List<int>();
+var i = 10;               // same as: int i = 10;
+
+This only works for local variables. Type inference is especially useful
+for types with generic type arguments (more on these later). Compare
+
+MyFoo<string, MyBar<string, int>> foo = new MyFoo<string, MyBar<string, int>>();
+
+vs.
+
+var foo = new MyFoo<string, MyBar<string, int>>();
+
+
+        Defining new Type from other
+
+Defining a new type is a matter of derive it from the one you need. Here
+is an example:
+
+defining an alias for a basic type (equivalent to typedef int Integer in
+C)*/ [SimpleType </SimpleType>] public struct Integer : uint { }
+
+/* Define a new type from a container like GLib.List with elements type GLib.Value */
+public class ValueList : GLib.List<GLib.Value> {
+        [CCode (has_construct_function = false)]
+        protected ValueList ();
+        public static GLib.Type get_type ();
+}
+
+
+      Operators
+
+=
+
+assignment. The left operand must be an identifier, and the right must
+result in a value or reference as appropriate.
+
++, -, /, *, %
+
+basic arithmetic, applied to left and right operands. The + operator can
+also concatenate strings.
+
++=, -=, /=, *=, %=
+
+arithmetic operation between left and right operands, where the left
+must be an identifier, to which the result is assigned.
+
+++, --
+
+increment and decrement operations with implicit assignment. These take
+just one argument, which must be an identifier of a simple data type.
+The value will be changed and assigned back to the identifier. These
+operators may be placed in either prefix or postfix positions - with the
+former the evaluated value of the statement will be the newly calculated
+value, with the latter the original value is returned.
+
+|, ^, &, ~, |=, &=, ^=
+
+bitwise operations: or, exclusive or, and, not. The second set include
+assignment and are analogous to the arithmetic versions. These can be
+applied to any of the simple value types. (There is of no assignment
+operator associated with ~ because this is a unary operator. The
+equivalent operation is just a = ~a).
+
+<<, >>
+
+bit shift operations, shifting the left operand a number of bits
+according the right operand.
+
+<<=, >>=
+
+bit shift operations, shifting the left operand a number of bits
+according the right operand. The left operand must be an identifier, to
+which the result is assigned.
+
+==
+
+equality test. Evaluates to a bool value dependent on whether the left
+and right operands are equal. In the case of value types this means
+their values are equal, in the case of reference types that the objects
+are the same instance. An exception to this rule is the string type,
+which is tested for equality by value.
+
+<, >, >=, <=, !=
+
+inequality tests. Evaluate to a bool value dependent on whether the left
+and right operands are different in the manner described. These are
+valid for simple value data types, and the string type. For strings
+these operators compare the lexicographical order.
+
+!, &&, ||
+
+logic operations: not, and, or. These operations can be applied to
+Boolean values - the first taking just one value the others two.
+
+? :
+
+ternary conditional operator. Evaluates a condition and returns either
+the value of the left or the right sub-expression based on whether the
+condition is true or false: /condition/ ? /value if true/ : /value if
+false/
+
+??
+
+null coalescing operator: a ?? b is equivalent to a != null ? a : b.
+This operator is useful for example to provide a default value in case a
+reference is /null/:
+
+stdout.printf("Hello, %s!\n", name ?? "unknown person");
+
+in
+
+checks if the right operand contains the left operand. This operator
+works on arrays, strings, collections or any other type that has an
+appropriate /contains()/ method. For strings it performs a substring
+search.
+
+Operators cannot be overloaded in Vala. There are extra operators that
+are valid in the context of lambda declarations and other specific tasks
+- these are explained in the context they are applicable.
+
+
+      Control Structures
+
+while (a > b) { a--; }
+
+will decrement /a/ repeatedly, checking before each iteration that /a/
+is greater than /b/.
+
+do { a--; } while (a > b);
+
+will decrement /a/ repeatedly, checking after each iteration that /a/ is
+greater than /b/.
+
+for (int a = 0; a < 10; a++) { stdout.printf("%d\n", a); }
+
+will initialize /a/ to 0, then print /a/ repeatedly until /a/ is no
+longer less than 10, incrementing /a/ after each iteration.
+
+foreach (int a in int_array) { stdout.printf("%d\n", a); }
+
+will print out each integer in an array, or another iterable collection.
+The meaning of "iterable" will be described later.
+
+All of the four preceding types of loop may be controlled with the
+keywords break and continue. A break instruction will cause the loop to
+immediately terminate, while continue will jump straight to the test
+part of the iteration.
+
+if (a > 0) { stdout.printf("a is greater than 0\n"); }
+else if (a < 0) { stdout.printf("a is less than 0\n"); }
+else { stdout.printf("a is equal to 0\n"); }
+
+executes a particular piece of code based on a set of conditions. The
+first condition to match decides which code will execute, if /a/ is
+greater than 0 it will not be tested whether it is less than 0. Any
+number of else if blocks is allowed, and zero or one else blocks.
+
+switch (a) {
+case 1:
+    stdout.printf("one\n");
+    break;
+case 2:
+case 3:
+    stdout.printf("two or three\n");
+    break;
+default:
+    stdout.printf("unknown\n");
+    break;
+}
+
+A switch statement runs exactly one or zero sections of code based on
+the value passed to it. In Vala there is no fall through between cases,
+except for empty cases. In order to ensure this, each non-empty case
+must end with a break, return or throw statement. It is possible to use
+switch statements with strings.
+
+A note for C programmers: conditions must always evaluate to a Boolean
+value. This means that if you want to check a variable for null or 0 you
+must do this explicitly: if (object != null) { } or if (number != 0) { }.
+
+
+      Language Elements
+
+
+        Methods
+
+Functions are called /methods/ in Vala, regardless of whether they are
+defined inside a class or not. From now on we will stick to the term
+/method/.
+
+int method_name(int arg1, Object arg2) {
+    return 1;
+}
+
+This code defines a method, having the name /method_name/, taking two
+arguments, one an integer and the other an /Object/ (the first passed by
+value, the second as a reference as described). The method will return
+an integer, which in this case is 1.
+
+All Vala methods are C functions, and therefore take an arbitrary number
+of arguments and return one value (or none if the method is declared
+/void/). They may approximate more return values by placing data in
+locations known to the calling code. Details of how to do this are in
+the "Parameter Directions" section in the advanced part of this tutorial.
+
+The naming convention for methods in Vala is /all_lower_case/ with
+underscores as word separators. This may be a little bit unfamiliar to
+C# or Java programmers who are accustomed to /CamelCase/ or
+/mixedCamelCase/ method names. But with this style you will be
+consistent with other Vala and C/GObject libraries.
+
+It is not possible to have multiple methods with the same name but
+different signature within the same scope ("method overloading"):
+
+void draw(string text) { }
+void draw(Shape shape) { }  // not possible
+
+This is due to the fact that libraries produced with Vala are intended
+to be usable for C programmers as well. In Vala you would do something
+like this instead:
+
+void draw_text(string text) { }
+void draw_shape(Shape shape) { }
+
+By choosing slightly different names you can avoid a name clash. In
+languages that support method overloading it is often used for providing
+convenience methods with less parameters that chain up to the most
+general method:
+
+void f(int x, string s, double z) { }
+void f(int x, string s) { f(x, s, 0.5); }  // not possible
+void f(int x) { f(x, "hello"); }           // not possible
+
+In this case you can use Vala's default argument feature for method
+parameters in order to achieve a similar behaviour with just one method.
+You can define default values for the last parameters of a method, so
+that you don't have to pass them explicitly to a method call:
+
+void f(int x, string s = "hello", double z = 0.5) { }
+
+Some possible calls of this method might be:
+
+f(2);
+f(2, "hi");
+f(2, "hi", 0.75);
+
+It's even possible to define methods with real variable-length argument
+lists (/varargs/) like /stdout.printf()/, although not necessarily
+recommended. You will learn how to do that later.
+
+Vala performs a basic nullability check on the method parameters and
+return values. If it is allowable for a method parameter or a return
+value to be null, the type symbol should be postfixed with a ? modifier.
+This extra information helps the Vala compiler to perform static checks
+and to add runtime assertions on the preconditions of the methods, which
+may help in avoiding related errors such as dereferencing a null reference.
+
+string? method_name(string? text, Foo? foo, Bar bar) {
+    // ...
+}
+
+In this example text, foo and the return value may be null, however, bar
+must not be null.
+
+
+        Delegates
+
+delegate void DelegateType(int a);
+
+Delegates represent methods, allowing chunks of code to be passed around
+like objects. The example above defines a new type named /DelegateType/
+which represents methods taking an /int/ and not returning a value. Any
+method that matches this signature may be assigned to a variable of this
+type or passed as a method argument of this type.
+
+delegate void DelegateType(int a);
+
+void f1(int a) {
+    stdout.printf("%d\n", a);
+}
+
+void f2(DelegateType d, int a) {
+    d(a);       // Calling a delegate
+}
+
+void main() {
+    f2(f1, 5);  // Passing a method as delegate argument to another method
+}
+
+This code will execute the method /f2/, passing in a reference to method
+/f1/ and the number 5. /f2/ will then execute the method /f1/, passing
+it the number.
+
+Delegates may also be created locally. A member method can also be
+assigned to a delegate, e.g,
+
+class Foo {
+
+    public void f1(int a) {
+        stdout.printf("a = %d\n", a);
+    }
+
+    delegate void DelegateType(int a);
+
+    public static int main(string[] args) {
+        Foo foo = new Foo();
+        DelegateType d1 = foo.f1;
+        d1(10);
+        return 0;
+    }
+}
+
+
+        Anonymous Methods / Closures
+
+(a) => { stdout.printf("%d\n", a); }
+
+An /anonymous method/, also known as /lambda expression/, /function
+literal/ or /closure/, can be defined in Vala with the => operator. The
+parameter list is on the left hand side of the operator, the method body
+on the right hand side.
+
+An anonymous method standing by itself like the one above does not make
+much sense. It is only useful if you assign it directly to a variable of
+a delegate type or pass it as a method argument to another method.
+
+Notice that neither parameter nor return types are explicitly given.
+Instead the types are inferred from the signature of the delegate it is
+used with.
+
+Assigning an anonymous method to a delegate variable:
+
+delegate void PrintIntFunc(int a);
+
+void main() {
+    PrintIntFunc p1 = (a) => { stdout.printf("%d\n", a); };
+    p1(10);
+
+    // Curly braces are optional if the body contains only one statement:
+    PrintIntFunc p2 = (a) => stdout.printf("%d\n", a);
+    p2(20);
+}
+
+Passing an anonymous method to another method:
+
+delegate int Comparator(int a, int b);
+
+void my_sorting_algorithm(int[] data, Comparator compare) {
+    // ... 'compare' is called somewhere in here ...
+}
+
+void main() {
+    int[] data = { 3, 9, 2, 7, 5 };
+    // An anonymous method is passed as the second argument:
+    my_sorting_algorithm(data, (a, b) => {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    });
+}
+
+Anonymous methods are real closures
+<http://en.wikipedia.org/wiki/Closure_(computer_science)>. This means
+you can access the local variables of the outer method within the lambda
+expression:
+
+delegate int IntOperation(int i);
+
+IntOperation curried_add(int a) {
+    return (b) => a + b;  // 'a' is an outer variable
+}
+
+void main() {
+    stdout.printf("2 + 4 = %d\n", curried_add(2)(4));
+}
+
+In this example /curried_add/ (see Currying
+<http://en.wikipedia.org/wiki/Currying>) returns a newly created method
+that preserves the value of /a/. This returned method is directly called
+afterwards with 4 as argument resulting in the sum of the two numbers.
+
+
+        Namespaces
+
+namespace NameSpaceName {
+    // ...
+}
+
+Everything between the braces in this statement is in the namespace
+/NameSpaceName/ and must be referenced as such. Any code outside this
+namespace must either use qualified names for anything within the name
+of the namespace, or be in a file with an appropriate using declaration
+in order to import this namespace:
+
+using NameSpaceName;
+
+// ...
+
+For example, if the namespace /Gtk/ is imported with using Gtk; you can
+simply write /Window/ instead of /Gtk.Window/. A fully qualified name
+would only be necessary in case of ambiguity, for example between
+/GLib.Object/ and /Gtk.Object/.
+
+The namespace /GLib/ is imported by default. Imagine an invisible
+using GLib; line at the beginning of every Vala file.
+
+Everything that you don't put into a separate namespace will land in the
+anonymous global namespace. If you have to reference the global
+namespace explicitly due to ambiguity you can do that with the global::
+prefix.
+
+Namespaces can be nested, either by nesting one declaration inside
+another, or by giving a name of the form /NameSpace1.NameSpace2/.
+
+Several other types of definition can declare themselves to be inside a
+namespace by following the same naming convention, e.g.
+class NameSpace1.Test { ... }. Note that when doing this, the final
+namespace of the definition will be the one the declaration is nested in
+plus the namespaces declared in the definition.
+
+
+        Structs
+
+struct StructName {
+    public int a;
+}
+
+defines a struct type, i.e. a compound value type. A Vala struct may
+have methods in a limited way and also may have private members, meaning
+the explicit public access modifier is required.
+
+struct Color {
+    public double red;
+    public double green;
+    public double blue;
+}
+
+This is how you can initialise a struct:
+
+// without type inference
+Color c1 = Color();
+Color c2 = { 0.5, 0.5, 1.0 };
+Color c3 = Color() {
+    red = 0.5,
+    green = 0.5,
+    blue = 1.0
+};
+
+// with type inference
+var c4 = Color();
+var c5 = Color() {
+    red = 0.5,
+    green = 0.5,
+    blue = 1.0
+};
+
+Structs are stack/inline allocated and copied on assignment.
+
+To define an array of structs, please see the FAQ
+</Projects/Vala/FAQ#How_do_I_create_an_array_of_structs.3F>.
+
+
+        Classes
+
+class ClassName : SuperClassName, InterfaceName {
+}
+
+defines a class, i.e. a reference type. In contrast to structs,
+instances of classes are heap allocated. There is much more syntax
+related to classes, which is discussed more fully in the section about
+object oriented programming.
+
+
+        Interfaces
+
+interface InterfaceName : SuperInterfaceName {
+}
+
+defines an interface, i.e. a non instantiable type. In order to create
+an instance of an interface you must first implement its abstract
+methods in a non-abstract class. Vala interfaces are more powerful than
+Java or C# interfaces. In fact, they can be used as mixins
+<http://en.wikipedia.org/wiki/Mixin>. The details of interfaces are
+described in the section about object oriented programming.
+
+
+      Code Attributes
+
+Code attributes instruct the Vala compiler details about how the code is
+supposed to work on the target platform. Their syntax is [AttributeName]
+or [AttributeName(param1 = value1, param2 = value2, ...)].
+
+They are mostly used for bindings in /vapi/ files, [CCode(...)] being
+the most prominent attribute here. Another example is the [DBus(...)]
+attribute for exporting remote interfaces via D-Bus
+<http://www.freedesktop.org/wiki/Software/dbus>.
+
+
+    Object Oriented Programming
+
+Although Vala doesn't force you to work with objects, some features are
+not available any other way. As such, you will certainly want to program
+in an object-oriented style most of the time. As with most current
+languages, in order to define your own object types, you write a class
+definition.
+
+A class definition states what data each object of its type has, what
+other object types it can hold references to, and what methods can be
+executed on it. The definition can include a name of another class which
+the new one should be a subclass of. An instance of a class is also an
+instance of all it's class's super classes, as it inherits from them all
+their methods and data, although it may not be able to access all of
+this itself. A class may also implement any number of interfaces, which
+are sets of method definitions that must be implemented by the class -
+an instance of a class is also an instance of each int
+

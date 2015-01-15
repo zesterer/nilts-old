@@ -1,0 +1,109 @@
+MAJOR VERSION
+
+MINOR VERSION
+
+RELEASE VERSION
+
+0.0.1
+
+ALPHA = 0.X.X (ALP.X.X)
+	- Release as .tar.gz, .zip & .dmg
+BETA = 1.X.X (BET.X.X)
+	- Release as .deb, .pkg, .rpm, .dmg, .exe
+RELEASE = 2.X.X (REL.X.X)
+	- Release as .deb, .pkg, .rpm, .dmg, .exe
+
+=== ALPHA ===
+
+TAU = 0.0.X (ALP.TAU.X)
+	- Character, movement, inventory, items, placeholder biomes
+MUON = 0.1.X (ALP.MUO.X)
+	- Biomes, swimming, underwater, inventory UI/hotbar
+STRANGE = 0.2.X (ALP.STR.X)
+	- Biome tinting, Creeping, sprinting, stamina/personal attributes, static NPCs
+BOTTOM = 0.3.X (ALP.BOT.X)
+	- NPC pathfinding, animals, buildings exteriors, nice looking water
+PHOTON = 0.4.X (ALP.PHO.X)
+	- Attacking, kicking, builing interiors, caves, self-improvement without boring grindy level systems like every rubbish rpg ever
+Z BOSON = 0.5.X (ALP.ZBO.X)
+	- Combat AI, option to use mouse, destructable and contructable terrain, more building types
+W BOSON = 0.6.X (ALP.WBO.X)
+	- Dynamic buildings, decorations (e.g. fountains), better water dynamics (waterfalls), boats
+TAU NEUTRINO = 0.7.X (ALP.TAN.X)
+	- Town generation, efficiency, explosions, particle effects
+MUON NEUTRINO = 0.8.X (ALP.MUN.X)
+	- Weather, music, better AI, interaction with NPCs, materials
+ELECTRON NEUTRINO = 0.9.X (ALP.ELN.X)
+	- Meaningful civilisation genetation and location, birds, tailoring and crafting
+ELECTRON = 0.A.X (ALP.ELE.X)
+	- War, inter-NPC action, weather, seasons, lighting effects
+DOWN = 0.B.X (ALP.DOW.X)
+	- Agriculture, weather affects terrain, disease spreads, languages, natural disasters
+UP = 0.C.X (ALP.UPX.X)
+	- Ecosystems of animals and plants, communication between different languages, NPCs have skills
+CHARM = 0.D.X (ALP.CHA.X)
+	- NPC self-improvement wblslerrpge, resource extraction, simple economy and transfer
+TOP = 0.E.X (ALP.TOP.X)
+	- Character has hunger and thirst and fatigue, multi-storey buildings, more types of building, windmills
+GLUON = 0.F.X (ALP.GLU.X)
+	- Magic, sound effects, ambient sounds, more music, better music, fire
+GOD = 0.10.X (ALP.GOD.X)
+	- Rudimentary ubran planning Grand AI, NPCs have different clothes
+
+=== BETA ===
+
+TAU = 1.0.X (BET.TAU.X)
+	- Different body types, different walk styles for different characters, more types of clothes
+MUON = 1.1.X (BET.MUO.X)
+	- Combat reworked to be based more on 'height', adjust combat and war AIs accordingly
+STRANGE = 1.2.X (BET.STR.X)
+	- Different socieities work in different ways, different hierarchies or not
+BOTTOM = 1.3.X (BET.BOT.X)
+	- Better economy, sea creatures, different cultures have different randomly generated folk stories
+PHOTON = 1.4.X (BET.PHO.X)
+	- Fire dynamics, better heat measurement, ecosystems can be affected or destroyed by player/NPC actions
+Z BOSON = 1.5.X (BET.ZBO.X)
+	- Locusts can destroy crops, player can have pets or companions
+W BOSON = 1.6.X (BET.WBO.X)
+	- NPCs are motivated by ambitions, desires and whims, internal politics of civilisations
+TAU NEUTRINO = 1.7.X (BET.TAN.X)
+	- Storeys in multi-storey buildings can be different shapes, can go below ground
+MUON NEUTRINO = 1.8.X (BET.MUN.X)
+	- Magically affected weather (upside down rain, floornados, so on), global climates
+ELECTRON NEUTRINO = 1.9.X (BET.ELN.X)
+	- Increased plant diversity, increased biodiversity, Great Individuals, better magic
+ELECTRON = 1.A.X (BET.ELE.X)
+	- Extra default texture packs, user-specification for worlds, global constants can be changed (run speed, walk speed)
+DOWN = 1.B.X (BET.DOW.X)
+	- Nice shaders, different music packs, giant 'monsters (?)', improved urban planning Grand AI
+UP = 1.C.X (BET.UPX.X)
+	- Much improved economy, different planning Grand AI personalities, more scarcity in resources
+CHARM = 1.D.X (BET.CHA.X)
+	- Recycling, better magic, instruments and music in game, more skills and abilities
+TOP = 1.E.X (BET.TOP.X)
+	- Cycle of repair and ruin, civilisations destroy and replace other civilisations, forcing others into nomadism
+GLUON = 1.F.X (BET.GLU.X)
+	- Global thermonuclear war, nomadic civilisations
+GOD = 1.10.X (BET.GOD.X)
+	- NPC relationships (love, like, don't like, rival, hate, despise, so on), better inter-NPC action, better interaction with NPCs
+
+=== RELEASE ===
+
+TAU = 2.0.X (REL.TAU.X)
+	- idk
+MUON = 2.1.X (REL.MUO.X)
+STRANGE = 2.2.X (REL.STR.X)
+BOTTOM = 2.3.X (REL.BOT.X)
+PHOTON = 2.4.X (REL.PHO.X)
+Z BOSON = 2.5.X (REL.ZBO.X)
+W BOSON = 2.6.X (REL.WBO.X)
+TAU NEUTRINO = 2.7.X (REL.TAN.X)
+MUON NEUTRINO = 2.8.X (REL.MUN.X)
+ELECTRON NEUTRINO = 2.9.X (REL.ELN.X)
+ELECTRON = 2.A.X (REL.ELE.X)
+DOWN = 2.B.X (REL.DOW.X)
+UP = 2.C.X (REL.UPX.X)
+CHARM = 2.D.X (REL.CHA.X)
+TOP = 2.E.X (REL.TOP.X)
+GLUON = 2.F.X (REL.GLU.X)
+GOD = 2.10.X (REL.GOD.X)

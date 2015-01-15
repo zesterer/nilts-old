@@ -1,0 +1,146 @@
+
+== Scales and World Sizes ===
+
+World size: 256 * 256 regions
+Region size: 32 * 32 cells
+Cell size: 32 * 32 pixels
+
+Km^2 size: 1024 * 1024 cells
+
+World size in Km^2: 256 * 256 * 32 * 32 / (1024 * 1024) = 64 Km^2
+
+Towns per Km: 2
+Average town population: 15
+
+=== NLI - Natural Language Interpreter ===
+
+Ignore punctuation!
+
+Wildcards:
+
+- [CHARACTER_NAME]
+- [THIS_NPC_NAME]
+- [RELATION_TO_THIS_NPC] (Family, Father, Mother, Son, Daughter, Child, Brother, Sister, Sibling, Grandfather, Grandmother)
+- [LOCATION_NAME]
+- [ITEM_TYPE]
+- [BLOCK_TYPE]
+- [GREETING] (Hello, Good Morning, Good Evening, Good Afternoon, Greetings, Hi, Welcome)
+- [TIME_OF_YEAR] (New year, Summer, Winter, Autumn, Spring, Midsummer Harvest?)
+
+Syntax:
+
+<!IGNORE>
+<THIS || OR || THAT>
+<$PLURALS>
+<$$PLURAL'S>
+<!$NOT_PLURAL>
+
+
+
+<!<[GREETING] || [GREETING], [THIS_NPC_NAME]>>
+	WHO
+		ARE
+			YOU?
+			YOUR
+				<$[RELATION_TO_NPC]>?
+		IS
+			YOUR
+				[RELATION_TO_NPC]?
+			[CHARACTER_NAME]?
+	WHAT
+		IS
+			YOUR
+				NAME?
+				AGE?
+				GENDER?
+				SPECIES?
+				OCCUPATION?
+				QUEST?
+				HOME SETTLEMENT?
+				FAVOURITE PASTTIME?
+				<$$[RELATION_TO_NPC]>
+					NAME?
+					OCCUPATION?
+					FAVOURITE PASTTIME?
+					BIRTHDAY?
+			A
+				[ITEM_NAME]?
+			[LOCATION_NAME]?
+			THE
+				DATE?
+				TIME?
+		ARE
+			YOUR
+				NAMES?
+				FAVOURITE PASTTIMES?
+				<$$[RELATION_TO_NPC]>
+					NAMES?
+					FAVOURITE PASTTIMES?
+			YOU
+				DOING?
+				TRADING?		
+	WHEN
+		IS
+			YOUR
+				BIRTHDAY?
+				<$$[RELATION_TO_NPC]>
+					BIRTHDAY?
+			IT
+				[TIME_OF_YEAR]?
+	HOW
+		OLD
+			ARE
+				YOU?
+				YOUR
+					<$[RELATION_TO_NPC]>?
+			IS
+				[CHARACTER_NAME]?
+				YOUR
+					[RELATION_TO_NPC]?
+		DO
+			YOU
+				DO?
+		<DO || CAN>
+			<YOU || I>
+				EAT?
+				DRINK?
+				ROLL?
+				FIGHT?
+				CREEP?
+				TRADE?
+		ARE
+			YOU?
+			YOUR
+				<$[RELATION_TO_NPC]>?
+		IS
+			YOUR
+				[RELATION_TO_NPC]?
+				OCCUPATION?
+				HEALTH?
+		FAR AWAY IS
+			[LOCATION_NAME]?
+	WHERE
+		DO
+			YOU
+				LIVE?
+				EAT?
+				TRADE?
+		IS
+			YOUR
+				[RELATION_TO_NPC]?
+			[CHARACTER_NAME]?
+			[LOCATION_NAME]?
+		CAN
+			<YOU || I || ONE>
+				EAT?
+				DRINK?
+				TRADE?
+
+=== Items and Inventories ===
+
+~~Item Factors~~
+- hardness
+- flexibility
+- damage
+- 
+
