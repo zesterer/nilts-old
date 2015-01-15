@@ -20,6 +20,7 @@ src/Display/render.vala \
 src/Display/interface.vala \
 src/Data/properties.vala \
 src/Data/items.vala \
+src/Data/inventory.vala \
 src/consts.vala \
 -C
 
@@ -47,6 +48,7 @@ src/Display/render.c \
 src/Display/interface.c \
 src/Data/properties.c \
 src/Data/items.c \
+src/Data/inventory.c \
 src/consts.c \
  -Ilibraries/CSFML-2.1/include -Ilibraries/gee/include -Ilibraries/glib2/include
 
@@ -70,6 +72,7 @@ render.o \
 interface.o \
 properties.o \
 items.o \
+inventory.o \
 consts.o \
 -lgee-0.8 -lgobject-2.0 -lglib-2.0 -Llibraries/gee/lib -Llibraries/shared-lib -lcsfml-window -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-network -lm \
 -fsanitize=address

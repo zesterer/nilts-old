@@ -142,5 +142,33 @@ Syntax:
 - hardness
 - flexibility
 - damage
+- mass
+- range
+- power
+
+~~Item properties~~
+- round
+- smooth
+- rough
+- rigid
+- brittle
 - 
+
+--SWORDS--
+
+Claymore (greatsword)
+Espadon (longsword)
+Dirk (longknife)
+Falchion
+Cutlass
+Scimitar
+
+--CLOTHES--
+
+Jerkin
+Socks
+Trousers
+Smock
+Cloak
+
 

@@ -37,17 +37,18 @@ class NPC : Entity
 	{
 		double x, y;
 		
-		if (Math.fabs(this.mother.player.pos.x - this.pos.x) > 64)
+		if (Math.fabs(this.mother.player.pos.x - this.pos.x) > 128)
 			x = Math.copysign(2, this.mother.player.pos.x - this.pos.x);
 		else
 			x = 0;
 		
-		if (Math.fabs(this.mother.player.pos.y - this.pos.y) > 64)
+		if (Math.fabs(this.mother.player.pos.y - this.pos.y) > 128)
 			y = Math.copysign(2, this.mother.player.pos.y - this.pos.y);
 		else
 			y = 0;
 		
 		this.pos.accelerate(x, y);
+		//Friction with the ground
 		this.pos.drag(0.3);
 		this.pos.z = this.mother.getCell(this.pos.x, this.pos.y).altitude;
 		this.pos.tick();
@@ -65,7 +66,8 @@ class Player : NPC
 	
 	public override void tick()
 	{
-		this.pos.drag(0.2);
+		//Friction with the ground
+		this.pos.drag(0.3);
 		this.pos.tick();
 	}
 }

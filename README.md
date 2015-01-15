@@ -72,4 +72,4 @@ I was bored.
 
 
 ## With credit to:
-- A friend who I know for a fact would most definitely prefer to remain unnamed. But yeah. He created most of the graphics and all of the music along with helping me with design and content planning. So thanks for that.
+- A friend who I know for a fact would most definitely prefer to remain Quint. But yeah. He created most of the graphics and all of the music along with helping me with design and content planning. So thanks for that.
