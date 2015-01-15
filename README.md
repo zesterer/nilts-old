@@ -50,6 +50,10 @@ Then, simply run NILTS with:
 
 'NILTS' is an acronym for 'New and Improved Leon Trotsky Simulator', first beginning as an inside joke between a friend and myself. I grew to like the name, and have since adopted it as the permanent name for the project. Ironically, NILTS is not new, improved, or a simulator. And it most definitely has nothing to with Leon Trotsky.
 
+### What are the controls?
+
+WASD control movement. Q and E rotate the view. Nothing more yet.
+
 ### What features are on the roadmap?
 
 Simple answer: I don't know. I'm not the kind of person to create plans. I do have a roadmap, but it's very subject to change so there's not much point putting it here. If you want features in development, see above.
