@@ -32,7 +32,9 @@ There are several features currently being developed:
 There is a x86_64 binary included in this repository, but if you wish to compile NILTS yourself, you can download and compile it as below:
 
 `git clone git://github.com/zesterer/nilts.git`
+
 `cd nilts`
+
 `sh cmd_to_compile.sh`
 
 Then, simply run NILTS with:
