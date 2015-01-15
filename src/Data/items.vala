@@ -1,39 +1,39 @@
 namespace Items
 {
-	Gee.ArrayList<Item?> items;
-	Gee.ArrayList<BaseItem> base_items;
+	List<Item?> items;
+	List<BaseItem> base_items;
 	
 	Items.BaseItem getBaseItem(int16 num)
 	{
-		for (int16 x = 0; x < Items.base_items.size; x ++)
+		for (int16 x = 0; x < Items.base_items.length(); x ++)
 		{
-			if (Items.base_items[x].id == num)
-				return Items.base_items[x];
+			if (Items.base_items.nth_data(x).id == num)
+				return Items.base_items.nth_data(x);
 		}
-		return base_items[0];
+		return Items.base_items.nth_data(0);
 	}
 	
 	Items.BaseItem getBaseMaterial(int16 num)
 	{
 		//TODO - this method isn't done yet.
-		for (int16 x = 0; x < Items.base_items.size; x ++)
+		for (int16 x = 0; x < Items.base_items.length(); x ++)
 		{
-			if (Items.base_items[x].id == num)
-				return Items.base_items[x];
+			if (Items.base_items.nth_data(x).id == num)
+				return Items.base_items.nth_data(x);
 		}
-		return base_items[0];
+		return base_items.nth_data(0);
 	}
 	
 	class BaseItem
 	{
 		public Items.ItemFactors factors;
-		public Gee.ArrayList<string> properties;
+		public List<string> properties;
 		public string name;
 		public int16 id;
 	
 		public BaseItem()
 		{
-			this.properties = new Gee.ArrayList<string>();
+			this.properties = new List<string>();
 			this.factors = ItemFactors.create();
 		}
 	}
@@ -44,7 +44,7 @@ namespace Items
 		public double flexibility;
 		public double mass;
 		public double range;
-		public double power
+		public double effectiveness;
 		public double flammability;
 		public double conductivity;
 		public double explosiveness;
@@ -57,7 +57,7 @@ namespace Items
 			this.flexibility *= factors.flexibility;
 			this.mass *= factors.mass;
 			this.range *= factors.range;
-			this.power *= factors.power;
+			this.effectiveness *= factors.effectiveness;
 			this.flammability *= factors.flammability;
 			this.conductivity *= factors.conductivity;
 			this.explosiveness *= factors.explosiveness;

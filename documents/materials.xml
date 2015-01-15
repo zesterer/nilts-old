@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<materials>
+	<material id="0">
+		<name>%n</name>
+		<name-variant>Identium</name-variant>
+		<mass>1.0</mass>
+		<hardness>1.0</hardness>
+		<flexibility>1.0</flexibility>
+		<effectiveness>1.0</effectiveness>
+		<processes-to></processes-to>
+		<flammability>1.0</flammability>
+		<conductivity>1.0</conductivity>
+		<explosiveness>6000</explosiveness>
+		<nutrition>1.0</nutrition>
+		<properties>smooth,identical,unassuming,odd</properties>
+	</material>
+	<material id="1">
+		<name>%n</name>
+		<name-variant>Paper,Parchment,Papyrus</name-variant>
+		<mass>0.1</mass>
+		<hardness>0.1</hardness>
+		<flexibility>0.9</flexibility>
+		<effectiveness>0.1</effectiveness>
+		<processes-to>smelting:-1</processes-to>
+		<flammability>0.7</flammability>
+		<conductivity>0.1</conductivity>
+		<explosiveness>3000</explosiveness>
+		<nutrition>0.2</nutrition>
+		<properties>pathetic,off-white,measly,floppy,almost amorphous,dull,matte,</properties>
+	</material>
+	<material id="2">
+		<name>%n</name>
+		<name-variant>Ash,Alder,Oak,Maple,Willow,Yew,Elm,Hawthorn,Birch,Beech,Pine,Greatwood,Fir</name-variant>
+		<mass>1.0</mass>
+		<hardness>1.2</hardness>
+		<flexibility>0.3</flexibility>
+		<effectiveness>0.9</effectiveness>
+		<processes-to>smelting:5</processes-to>
+		<flammability>0.6</flammability>
+		<conductivity>0.01</conductivity>
+		<explosiveness>4500</explosiveness>
+		<nutrition>0.1</nutrition>
+		<properties>unnutritious,dull,smooth,hard,flammable,blemished</properties>
+	</material>
+	</material>
+	<material id="3">
+		<name>%n</name>
+		<name-variant>Iron Ore,Ferrous Ore,Haematite</name-variant>
+		<mass>2.5</mass>
+		<hardness>1.4</hardness>
+		<flexibility>0.2</flexibility>
+		<effectiveness>0.85</effectiveness>
+		<processes-to>smelting:4</processes-to>
+		<flammability>0.01</flammability>
+		<conductivity>0.2</conductivity>
+		<explosiveness>10000</explosiveness>
+		<nutrition>0.01</nutrition>
+		<properties>inedible,rough,unhewn,hard,common,boring</properties>
+	</material>
+	<material id="4">
+		<name>%n</name>
+		<name-variant>Iron</name-variant>
+		<mass>3.5</mass>
+		<hardness>2.0</hardness>
+		<flexibility>0.1</flexibility>
+		<effectiveness>0.95</effectiveness>
+		<processes-to>smelting:4</processes-to>
+		<flammability>0.01</flammability>
+		<conductivity>0.5</conductivity>
+		<explosiveness>6000</explosiveness>
+		<nutrition>0.001</nutrition>
+		<properties>inedible,rough,hewn,hard,common,boring,weighty,metallic</properties>
+	</material>
+	<material>
+		<material id="5">
+		<name>%n</name>
+		<name-variant>Charcoal,Coal</name-variant>
+		<mass>1.0</mass>
+		<hardness>0.7</hardness>
+		<flexibility>0.24</flexibility>
+		<effectiveness>0.05</effectiveness>
+		<processes-to>smelting:5</processes-to>
+		<flammability>0.225</flammability>
+		<conductivity>0.4</conductivity>
+		<explosiveness>1000</explosiveness>
+		<nutrition>0.1</nutrition>
+		<properties>easy-burning,burnt,cinderly,sooty,black,crumbly</properties>
+	</material>
+	<material>
+		<material id="6">
+		<name>%n</name>
+		<name-variant>Earthen,Dirt,Soil,Mud</name-variant>
+		<mass>0.8</mass>
+		<hardness>0.3</hardness>
+		<flexibility>0.1</flexibility>
+		<effectiveness>0.0</effectiveness>
+		<flammability>0.00005</flammability>
+		<conductivity>0.0</conductivity>
+		<explosiveness>6001</explosiveness>
+		<nutrition>0.2</nutrition>
+		<properties>surprisingly edible,muddy,dirty,murky,crumbling</properties>
+	</material>
+	<material>
+	<material id="7">
+		<name>%n</name>
+		<name-variant>Copper</name-variant>
+		<mass>1.2</mass>
+		<hardness>1.85</hardness>
+		<flexibility>0.35</flexibility>
+		<effectiveness>1.0</effectiveness>
+		<processes-to>smelting:7</processes-to>
+		<flammability>0.0025</flammability>
+		<conductivity>500.0</conductivity>
+		<explosiveness>5509</explosiveness>
+		<nutrition>0.0</nutrition>
+		<properties>inedible,smooth,hewn,hard,bright,reflective,interesting,unusual</properties>
+	</material>
+	<material id="8">
+		<name>%n</name>
+		<name-variant>Water</name-variant>
+		<mass>1.0</mass>
+		<hardness>0.0</hardness>
+		<flexibility>1000.0</flexibility>
+		<effectiveness>1.0</effectiveness>
+		<processes-to>smelting:7</processes-to>
+		<flammability>0.0</flammability>
+		<conductivity>500.0</conductivity>
+		<explosiveness>600001</explosiveness>
+		<nutrition>0.0</nutrition>
+		<properties>liquid,watery,clear,wet,moisturising,slippery</properties>
+	</material>
+		<name>%n</name>
+		<name-variant>Stone,Rock</name-variant>
+		<mass>1.8</mass>
+		<hardness>5.0</hardness>
+		<flexibility>0.1</flexibility>
+		<effectiveness>0.7</effectiveness>
+		<processes-to></processes-to>
+		<flammability>0.0</flammability>
+		<conductivity>0.001</conductivity>
+		<explosiveness>10004</explosiveness>
+		<nutrition>0.0</nutrition>
+		<properties>liquid,watery,clear,wet,moisturising,slippery</properties>
+	</material>
+</materials>

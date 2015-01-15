@@ -66,6 +66,7 @@ class Player : NPC
 	
 	public override void tick()
 	{
+		this.rot = (int)Consts.view_rotation;
 		//Friction with the ground
 		this.pos.drag(0.3);
 		this.pos.tick();

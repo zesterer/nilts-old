@@ -1,14 +1,14 @@
 class World : Object
 {
-	uint32 seed = 15004027;
-	public uint64 ticker;
+	public uint32 seed = 15004027;
+	public int64 ticker;
 	
 	public Region?[,] regions;
 	//This region is used when a region has not been loaded, and represents empty space. This prevents crashes and so on.
 	public Region empty_region;
 	//TODO
 	//public Entity[] entites;
-	public Gee.ArrayList<Entity> entities;
+	public List<Entity> entities;
 	public Player player;
 	//public Inventory[] inventories;
 	//public Item[] items;
@@ -25,7 +25,7 @@ class World : Object
 			stdout.printf("Creating world...\n");
 		
 		//The good ole' entities list
-		this.entities = new Gee.ArrayList<Entity>();
+		this.entities = new List<Entity>();
 		
 		//The generator thread
 		this.region_generator = new RegionGenerator(this);
@@ -41,11 +41,11 @@ class World : Object
 		}
 		
 		this.player = new Player(this.seed + 1, this);
-		this.entities.add((Entity)this.player);
+		this.entities.append((Entity)this.player);
 		
 		//Nothing as good as a test entity!
 		Entity someguy = (Entity)new NPC(this.seed, this);
-		this.entities.add(someguy);
+		this.entities.append(someguy);
 		
 		//Define the world tick
 		this.ticker = 0;
@@ -83,7 +83,7 @@ class World : Object
 	public Region getRegion(int x, int y) //Find a region
 	{	
 		if ((x >= Consts.world_size) || (y >= Consts.world_size) || (x < 0) || (y < 0)) //We're outside the world.
-				return this.empty_region;
+			return this.empty_region;
 		
 		if (this.regions[x, y] != null)
 		{
@@ -152,9 +152,9 @@ class World : Object
 		
 		//Do stuff in the world
 		//Tick all entities
-		for (int x = 0; x < this.entities.size; x ++)
+		for (int x = 0; x < this.entities.length(); x ++)
 		{
-			this.entities[x].tick();
+			this.entities.nth_data(x).tick();
 		}
 		
 		//Check for unload-able regions

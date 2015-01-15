@@ -20,7 +20,7 @@ class Display : Object
 	public SFML.Graphics.View view;
 	
 	//The user interface elements
-	public Gee.ArrayList<UIElement> ui_elements;
+	public List<UIElement> ui_elements;
 	
 	//The event handler for processing events
 	public EventHandler event_handler;
@@ -47,11 +47,11 @@ class Display : Object
 		this.view = new SFML.Graphics.View();
 		
 		//The user interface elements
-		this.ui_elements = new Gee.ArrayList<UIElement>();
+		this.ui_elements = new List<UIElement>();
 		UIElement ele = (UIElement)new CompassDisplay(this, this.world);
-		this.ui_elements.add(ele);
+		this.ui_elements.append(ele);
 		UIElement fps = (UIElement)new FPSDisplay(this, this.world);
-		this.ui_elements.add(fps);
+		this.ui_elements.append(fps);
 		
 		//The event handler - this comes last, since it's relatively unimportant.
 		this.event_handler = new EventHandler(this, this.world);
@@ -112,9 +112,9 @@ class Display : Object
 		
 		//Signal an update to all UI elements such that they may move / resize
 		//This method is triggered by resetView() also, so it will run for both!
-		for (int x = 0; x < this.ui_elements.size; x ++)
+		for (int x = 0; x < this.ui_elements.length(); x ++)
 		{
-			this.ui_elements[x].update();
+			this.ui_elements.nth_data(x).update();
 		}
 		
 		//Yet, this is the view we're using
@@ -147,9 +147,9 @@ class Display : Object
 		Render.drawUIElements(this.window, this.world, this);
 		
 		//Tick the UI elements
-		for (int count = 0; count < this.ui_elements.size; count ++)
+		for (int count = 0; count < this.ui_elements.length(); count ++)
 		{
-			this.ui_elements[count].tick();
+			this.ui_elements.nth_data(count).tick();
 		}
 		
 		//Increment the ticker

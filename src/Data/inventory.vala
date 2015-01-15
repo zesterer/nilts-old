@@ -9,7 +9,7 @@ class Inventory : Object
 	
 	public Item getAt(int x, int y)
 	{
-		return Items.items[this.grid[x, y]];
+		return Items.items.nth_data(this.grid[x, y]);
 	}
 	
 	public void setAt(int x, int y, Item item)

@@ -8,6 +8,9 @@ class Region : Object
 	
 	public Cell[,] cells;
 	
+	public bool generated;
+	public bool rendered;
+	
 	public SFML.Graphics.RenderTexture? texture;
 	
 	public Region(World parent, uint32 seed, int32 x, int32 y)
@@ -19,6 +22,9 @@ class Region : Object
 		this.empty = false;
 		
 		this.cells = new Cell[Consts.region_size, Consts.region_size];
+		
+		this.generated = false;
+		this.rendered = false;
 		
 		//TODO - support for multi-threaded loading of cells
 		//this.loadCells();
@@ -53,6 +59,7 @@ class Region : Object
 	
 	public void generate()
 	{
+		this.generated = true;
 		for (int x = 0; x < Consts.region_size; x ++)
 		{
 			for (int y = 0; y < Consts.region_size; y ++)
@@ -105,8 +112,11 @@ class Region : Object
 		{
 			//Add it to the quewe
 			this.parent.region_generator.mutex.lock();
-			this.parent.region_generator.generating_regions.add(this);
-			this.parent.region_generator.generating_regions_operation.add("render");
+			if ((this in this.parent.region_generator.generating_regions) == false)
+			{
+				this.parent.region_generator.generating_regions.add(this);
+				this.parent.region_generator.generating_regions_operation.add("render");
+			}
 			this.parent.region_generator.mutex.unlock();
 		}
 		else
@@ -118,6 +128,7 @@ class Region : Object
 	
 	public void render()
 	{
+		this.rendered = true;
 		SFML.Graphics.Sprite cellsprite = new SFML.Graphics.Sprite();
 		SFML.System.Vector2f position;
 		
@@ -204,5 +215,83 @@ struct Cell
 	public int ground_type;
 	public int? block_type;
 	public int32 temperature;
+	public double altitude;
+}
+
+class NRegion : Object
+{
+	public weak World mother;
+	
+	public uint32 seed;
+	public Position pos;
+	
+	private int64 updateTimeoutCounter;
+	
+	private SFML.Graphics.RenderTexture? _texture;
+	
+	private Cell[,] cells;
+	
+	public bool isEmpty;
+	private bool generateHasBeenCalled;
+	private bool renderHasBeenCalled;
+	
+	public NRegion(World mother, int32 x, int32 y, bool isEmpty = false)
+	{
+		this.mother = mother;
+		
+		this.pos = new Position(x * Consts.region_size_pixels, Consts.region_size_pixels);
+		this.seed = mother.seed;
+		this.updateTimeoutCounter = this.mother.ticker;
+		
+		this.cells = new Cell[Consts.region_size, Consts.region_size];
+		
+		this.isEmpty = isEmpty;
+		this.generateHasBeenCalled = false;
+		this.renderHasBeenCalled = false;
+		
+		//It's nothing at the moment
+		this._texture = null;
+	}
+	
+	//Destructor
+	~Region()
+	{
+		Consts.output("A region has been unloaded");
+	}
+	
+	//The texture value. Can get, but not set.
+	public unowned SFML.Graphics.RenderTexture? texture
+	{
+		get
+		{return this._texture;}
+		set
+		{Consts.output("Error: texture cannot be written to.");}
+	}
+	
+	//Update the timeout counter such that the region will not yet be marked for unloading
+	public void updateTimeout()
+	{
+		this.updateTimeoutCounter = this.mother.ticker;
+	}
+	
+	//Find the cell corresponding to the in-region cell position
+	public unowned Cell? getCell(int x, int y)
+	{
+		this.updateTimeout();
+		return this.cells[x, y];
+	}
+}
+
+struct NCell
+{
+	public int16 x;
+	public int16 y;
+	
+	public uint32 seed;
+	
+	public int16 ground_type;
+	public int16 block_type;
+	
+	public double temperature;
 	public double altitude;
 }

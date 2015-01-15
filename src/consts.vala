@@ -51,7 +51,8 @@ namespace Consts
 	
 	public const bool vary_cell_colour = true;
 	public const bool draw_fog = true;
-	public const int fog_dist = 60;
+	public const int fog_dist = 40;
+	public const double lightening_multiplier = 0.4;
 	
 	public const int world_size = 256;
 	public const int region_size = 32;
@@ -68,9 +69,10 @@ namespace Consts
 	
 	public const bool debug = true;
 	
-	void output(string message)
+	public void output(string message, string type = "DEBUG")
 	{
-		stdout.printf("%s\n", message);
+		if (Consts.debug || type != "DEBUG")
+			stdout.printf("[" + type + "] " + message + "\n");
 	}
 }
 

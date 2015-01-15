@@ -10,7 +10,7 @@ class Position
 	
 	private double _mass = 0;
 	
-	public Position(int32 x, int32 y, int32 z = 0)
+	public Position(int32 x, int32 y, double z = 0)
 	{
 		this.x = x;
 		this.y = y;
@@ -22,7 +22,10 @@ class Position
 		get
 		{return (int32)this._x;}	
 		set
-		{this._x = (double)value;}
+		{
+			this.checkPosition();
+			this._x = (double)value;
+		}
 	}
 	
 	public int32 y
@@ -30,7 +33,10 @@ class Position
 		get
 		{return (int32)this._y;}	
 		set
-		{this._y = (double)value;}
+		{
+			this.checkPosition();
+			this._y = (double)value;
+		}
 	}
 	
 	public double z
@@ -38,7 +44,10 @@ class Position
 		get
 		{return this._z;}
 		set
-		{this._z = value;}
+		{
+			this.checkPosition();
+			this._z = value;
+		}
 	}
 	
 	public double mx
@@ -94,6 +103,7 @@ class Position
 		this._x += x;
 		this._y += y;
 		this._z += z;
+		this.checkPosition();
 	}
 	
 	public void accelerate(double x, double y, double z = 0)
@@ -120,6 +130,14 @@ class Position
 		this._my -= Math.copysign(Consts.time_delta * amount * Math.pow(Math.fabs(this._my), 1.2), this._my);
 		if (andz)
 			this._mz -= Math.copysign(Consts.time_delta * amount * Math.pow(Math.fabs(this._mz), 1.2), this._mz);
+	}
+	
+	public void checkPosition()
+	{
+		if (this._x < 0)
+			this._x = 0;
+		if (this._y < 0)
+			this._y = 0;
 	}
 	
 	public void tick()

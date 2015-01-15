@@ -116,12 +116,12 @@ namespace Render
 								if (alt > pos.z + Consts.fog_dist)
 								{
 									//Wow. It's higher. Make it brown.
-									col = {32, 20, 10, (int8)Math.fabs(Math.fmin((alt - pos.z) - Consts.fog_dist, 255))};
+									col = {32, 20, 10, (int8)Math.fabs(Math.fmax(0, Math.fmin(Consts.lightening_multiplier * (alt - pos.z) - Consts.fog_dist, 255)))};
 								}
 								else if (alt < pos.z - Consts.fog_dist)
 								{
 									//Wow. It's lower. Make it white. Is this racist?
-									col = {sky_colour.r, sky_colour.g, sky_colour.b, (int8)Math.fabs(Math.fmin((pos.z - alt) - Consts.fog_dist, 255))};
+									col = {sky_colour.r, sky_colour.g, sky_colour.b, (int8)Math.fabs(Math.fmax(0, Math.fmin(Consts.lightening_multiplier * (pos.z - alt) - Consts.fog_dist, 255)))};
 								}
 								else
 								{
@@ -153,10 +153,10 @@ namespace Render
 		
 		Entity entity;
 		
-		for (int x = 0; x < world.entities.size; x ++)
+		for (int x = 0; x < world.entities.length(); x ++)
 		{
 			//define the entity for convenience
-			entity = world.entities[x];
+			entity = world.entities.nth_data(x);
 			
 			//Set the position
 			float posx = (float)(entity.pos.x - pos.x);
@@ -185,10 +185,10 @@ namespace Render
 		
 		UIElement element;
 		
-		for (int x = 0; x < display.ui_elements.size; x ++)
+		for (int x = 0; x < display.ui_elements.length(); x ++)
 		{
 			//define the entity for convenience
-			element = display.ui_elements[x];
+			element = display.ui_elements.nth_data(x);
 			
 			//Set the position
 			draw_position = {element.anim_x, element.anim_y};
