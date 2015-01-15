@@ -52,3 +52,13 @@ Then, simply run NILTS with:
 Simple answer: I don't know. I'm not the kind of person to create plans. I do have a roadmap, but it's very subject to change so there's not much point putting it here. If you want features in development, see above.
 
 ### How do I compile it?
+
+See above
+
+### Why the name 'NILTS'?
+
+See above
+
+### Why so many utterly redundant FAQ questions?
+
+I was bored.
