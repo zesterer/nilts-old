@@ -44,6 +44,10 @@ Then, simply run NILTS with:
 
 `./nilts`
 
+NOTE: If you have problems when compiling - errors about missing libraries - first run this command from the nilts directory:
+
+`export LD_LIBRARY_PATH=libraries/shared-lib`
+
 ## FAQ
 
 ### Why the name 'NILTS'?

@@ -21,7 +21,7 @@ namespace Render
 				
 				//Grab the bloody texture from the region and set it
 				region = world.getRegion((int)pos.regionX + x, (int)pos.regionY + y);
-				if (region.empty || region.texture == null) //We're outside the world
+				if (region.isEmpty || region.texture == null) //We're outside the world
 				{
 					if (region.texture == null)
 						region.update();
@@ -31,7 +31,7 @@ namespace Render
 					tex = region.texture.get_texture();
 				
 				//We've got the texture, so keep it from unloading!
-				region.update_tick = Consts.tick;
+				region.updateTimeout();
 				if (tex != null)
 					sprite.set_texture(tex, false);
 				
@@ -85,7 +85,7 @@ namespace Render
 					region = world.getRegion((int)pos.regionX + x, (int)pos.regionY + y);
 					//tex = region.texture.get_texture();
 					//We've got the texture, so keep it from unloading!
-					region.update_tick = Consts.tick;
+					region.updateTimeout();
 				
 					//In what position are we drawing this? And set.
 					regionx = -(int)(pos.x % Consts.region_size_pixels) + x * Consts.region_size_pixels;
@@ -110,7 +110,7 @@ namespace Render
 							
 							if (!(draw_position.x < -Consts.cell_size * 2 || draw_position.x > Consts.view_width + Consts.cell_size * 2 || draw_position.y < -Consts.cell_size * 2 || draw_position.y > Consts.view_height + Consts.cell_size * 2))
 							{
-								alt = region.cells[xx, yy].altitude;
+								alt = region.getCell(xx, yy).altitude;
 							
 								//What colour are we using? Let's find out:
 								if (alt > pos.z + Consts.fog_dist)

@@ -21,9 +21,6 @@ class World : Object
 	
 	public World()
 	{
-		if (Consts.debug)
-			stdout.printf("Creating world...\n");
-		
 		//The good ole' entities list
 		this.entities = new List<Entity>();
 		
@@ -54,13 +51,12 @@ class World : Object
 		this.regions = new Region[Consts.world_size, Consts.world_size];
 		
 		//The empty default region
-		this.empty_region = new Region(this, this.seed, 0, 0);
-		this.empty_region.generateEmpty();
+		this.empty_region = new Region(this, 0, 0, true);
+		this.empty_region.generate();
 		
 		this.event_manager = new EventManager(this);
 		
-		if (Consts.debug)
-			stdout.printf("Created world.\n");
+		Consts.output("Creating world");
 	}
 	
 	public void generateRegion(int x, int y) //Generate a specific region
@@ -88,12 +84,12 @@ class World : Object
 		if (this.regions[x, y] != null)
 		{
 			//The region is already loaded into memory
-			this.regions[x, y].update_tick = Consts.tick;
+			this.regions[x, y].updateTimeout();
 			return this.regions[x, y];
 		}
 		else
 		{	
-			this.regions[x, y] = new Region(this, this.seed, x, y);
+			this.regions[x, y] = new Region(this, x, y);
 			this.generateRegion(x, y);
 			return this.regions[x, y];
 		}
@@ -108,7 +104,7 @@ class World : Object
 	
 	public void unloadRegion(Region region)
 	{
-		if (region.unloadEvent())
+		if (true)//region.unloadEvent())
 		{
 			//Check the reference counter for debugging purposes
 			//if (Consts.debug)
@@ -130,7 +126,7 @@ class World : Object
 			{
 				if (this.regions[x, y] != null)
 				{
-					if (Consts.tick - this.regions[x, y].update_tick > Consts.region_lifetime)
+					if (this.regions[x, y].isOutdated())
 					{
 						this.unloadRegion(this.regions[x, y]);
 					}
@@ -218,13 +214,9 @@ class RegionGenerator : Object
 				{
 					region.generate();
 				}
-				else if (operation == "generate_empty")
-				{
-					region.generateEmpty();
-				}
 				else if (operation == "load_cells")
 				{
-					region.loadCells();
+					//region.loadCells();
 				}
 				else if (operation == "render")
 				{

@@ -129,10 +129,9 @@ class Display : Object
 		//Region? region = this.world.regions[x / Consts.region_size_pixels, y / Consts.region_size_pixels];
 		//this.pos.z = region.cells[(x / Consts.cell_size) % Consts.region_size, (y / Consts.cell_size) % Consts.region_size].altitude;
 		
-		this.pos.z = this.world.getCell(this.pos.x, this.pos.y).altitude;
-		
 		this.pos.x = this.world.player.pos.x;
 		this.pos.y = this.world.player.pos.y;
+		this.pos.z = this.world.player.pos.z;
 		
 		//And handle the momentum
 		this.pos.tick();
