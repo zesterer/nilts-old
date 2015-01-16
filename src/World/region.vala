@@ -205,7 +205,7 @@
 		
 		return true;
 	}
-} */
+} 
 
 struct Cell
 {
@@ -216,7 +216,7 @@ struct Cell
 	public int? block_type;
 	public int32 temperature;
 	public double altitude;
-}
+}*/
 
 class Region : Object
 {
@@ -257,6 +257,12 @@ class Region : Object
 	~Region()
 	{
 		Consts.output("A region has been unloaded");
+	}
+	
+	//Unload confirm event
+	public bool canUnload()
+	{
+		return true;
 	}
 	
 	//The texture value. Can get, but not set.
@@ -305,7 +311,7 @@ class Region : Object
 				{
 					int32 val = NoiseTypes.types[0].getValueAt(this.pos.x / Consts.cell_size + x, this.pos.y / Consts.cell_size + y, this.seed);
 				
-					this.cells[x, y].altitude = val;
+					this.cells[x, y].altitude = (double)val;
 				
 					if (val > 100)
 						this.cells[x, y].ground_type = 1;
@@ -408,7 +414,7 @@ class Region : Object
 				//Give it some variation
 				if (Consts.vary_cell_colour && GroundTypes.types[cell.ground_type].vary_texture_colour)
 				{
-					col.a = uint8.max(col.a + (uint8)uint32.min(cell.temperature, 0), 128);
+					col.a = uint8.max(col.a + (uint8)uint32.min((int32)cell.temperature, 0), 128);
 					col.r = uint8.max(col.r - (uint8)ran.int_range(0, 20), 128);
 					col.g = uint8.max(col.g - (uint8)ran.int_range(0, 20), 128);
 					col.b = uint8.max(col.b - (uint8)ran.int_range(0, 20), 128);
@@ -445,7 +451,7 @@ class Region : Object
 	}
 }
 
-struct NCell
+struct Cell
 {
 	public int16 x;
 	public int16 y;

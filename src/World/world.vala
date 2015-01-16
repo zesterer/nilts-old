@@ -104,17 +104,9 @@ class World : Object
 	
 	public void unloadRegion(Region region)
 	{
-		if (true)//region.unloadEvent())
+		if (region.canUnload())
 		{
-			//Check the reference counter for debugging purposes
-			//if (Consts.debug)
-				//stdout.printf("Object reference counter = %s.\n", region.ref_count.to_string());
-			
-			//Delete / dereference it all
-			//this.regions[region.pos.getRegion_x(), region.pos.getRegion_y()].texture.close();
 			this.regions[region.pos.regionX, region.pos.regionY] = null;
-			//this.regions[region.pos.getRegion_x(), region.pos.getRegion_y()].cells = null;
-			//this.regions[region.pos.getRegion_x(), region.pos.getRegion_y()] = null;
 		}
 	}
 	
@@ -130,11 +122,6 @@ class World : Object
 					{
 						this.unloadRegion(this.regions[x, y]);
 					}
-					
-					//if (Consts.tick - this.regions[x, y].update_tick == Consts.render_lifetime && this.regions[x, y].texture != null)
-					//{
-						//this.regions[x, y].texture = null;
-					//}
 				}
 			}
 		}

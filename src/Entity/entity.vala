@@ -67,7 +67,6 @@ class Player : NPC
 	public override void tick()
 	{
 		this.pos.z = this.mother.getCell(this.pos.x, this.pos.y).altitude;
-		Consts.output(this.mother.getCell(this.pos.x, this.pos.y).altitude.to_string());
 		this.rot = (int)Consts.view_rotation;
 		//Friction with the ground
 		this.pos.drag(0.3);
