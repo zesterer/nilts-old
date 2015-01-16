@@ -164,7 +164,6 @@ class Display : Object
 		if (Consts.debug)
 		{
 			this.seconds = Consts.timer.elapsed(out this.microseconds);
-			Consts.output(this.seconds.to_string());
 			Consts.fps_current = double.min((double)(Consts.fps_target) / seconds, Consts.fps_target);
 			Consts.time_delta = (double)60 / Consts.fps_current;
 			//Thread.usleep((int)(100 * ((double)Consts.fps_target - this.seconds)));
