@@ -8,7 +8,8 @@ class Entity : Object
 	
 	public Entity(uint32 seed, World mother)
 	{
-		this.seed = seed;
+		GLib.Rand ran = new GLib.Rand.with_seed(seed);
+		this.seed = ran.next_int();
 		this.mother = mother;
 		this.name = "Entity";
 		this.pos = new Position(8, 8, 0);
@@ -66,6 +67,17 @@ class Player : NPC
 	
 	public override void tick()
 	{
+		int speed = 2;
+		
+		if (this.mother.event_manager.KEY_W)
+			this.pos.accelerate(Consts.view_j.multiply(-speed).x, Consts.view_j.multiply(-speed).y);
+		if (this.mother.event_manager.KEY_A)
+			this.pos.accelerate(Consts.view_i.multiply(-speed).x, Consts.view_i.multiply(-speed).y);
+		if (this.mother.event_manager.KEY_S)
+			this.pos.accelerate(Consts.view_j.multiply(speed).x, Consts.view_j.multiply(speed).y);
+		if (this.mother.event_manager.KEY_D)
+			this.pos.accelerate(Consts.view_i.multiply(speed).x, Consts.view_i.multiply(speed).y);
+		
 		this.pos.z = this.mother.getCell(this.pos.x, this.pos.y).altitude;
 		this.rot = (int)Consts.view_rotation;
 		//Friction with the ground

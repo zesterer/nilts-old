@@ -24,7 +24,7 @@ namespace Render
 				if (region.isEmpty || region.texture == null) //We're outside the world
 				{
 					if (region.texture == null)
-						region.update();
+						region.renderUpdate();
 					tex = null;
 				}
 				else

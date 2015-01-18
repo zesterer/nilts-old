@@ -27,17 +27,6 @@ class EventHandler : Object
 		this.world.event_manager.KEY_Q = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.Q);
 		this.world.event_manager.KEY_E = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.E);
 		
-		int speed = 2;
-		
-		if (SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.D))
-			this.world.player.pos.accelerate(Consts.view_i.multiply(speed).x, Consts.view_i.multiply(speed).y);
-		if (SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.A))
-			this.world.player.pos.accelerate(Consts.view_i.multiply(-speed).x, Consts.view_i.multiply(-speed).y);
-		if (SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.S))
-			this.world.player.pos.accelerate(Consts.view_j.multiply(speed).x, Consts.view_j.multiply(speed).y);
-		if (SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.W))
-			this.world.player.pos.accelerate(Consts.view_j.multiply(-speed).x, Consts.view_j.multiply(-speed).y);
-		
 		if (SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.Q))
 		{
 			Consts.view_rotation -= 2;

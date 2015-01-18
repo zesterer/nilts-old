@@ -42,6 +42,8 @@ class Region : Object
 	//Unload confirm event
 	public bool canUnload()
 	{
+		if (this.isEmpty)
+			return false;
 		return true;
 	}
 	
@@ -77,6 +79,9 @@ class Region : Object
 	//Generate the region
 	public void generate()
 	{
+		//Update the timeout to prevent dying
+		this.updateTimeout();
+		
 		if (this.isEmpty)
 		{
 			this.generateEmpty();
@@ -106,8 +111,6 @@ class Region : Object
 			}
 		
 			Consts.output("Generated a region");
-		
-			this.updateTimeout();
 		}
 	}
 	
@@ -126,11 +129,9 @@ class Region : Object
 		}
 		
 		Consts.output("Generated an empty region");
-		
-		this.updateTimeout();
 	}
 	
-	public void update()
+	public void renderUpdate()
 	{
 		this.updateTimeout();
 		this.renderHasBeenCalled = true;
@@ -201,7 +202,7 @@ class Region : Object
 					
 					if (ran.boolean())
 					{
-						if (Random.boolean())
+						if (ran.boolean())
 						cellsprite.set_scale({1, 1});
 						else
 						cellsprite.set_scale({-1, 1});

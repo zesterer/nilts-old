@@ -1,6 +1,6 @@
 class World : Object
 {
-	public uint32 seed = 15004027;
+	public uint32 seed = 15004026;
 	public int64 ticker;
 	
 	public Region?[,] regions;
@@ -21,6 +21,9 @@ class World : Object
 	
 	public World()
 	{
+		GLib.Rand ran = new GLib.Rand.with_seed(this.seed);
+		this.seed = ran.next_int();
+		
 		//The good ole' entities list
 		this.entities = new List<Entity>();
 		
