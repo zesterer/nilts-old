@@ -62,13 +62,13 @@ WASD control movement. Q and E rotate the view. Nothing more yet.
 
 Simple answer: I don't know. I'm not the kind of person to create plans. I do have a roadmap, but it's very subject to change so there's not much point putting it here. If you want features in development, see above.
 
-### How do I compile it?
+### Which platforms will NILTS be released on?
 
-See above
+When I get to a stable-ish alpha release, I will hopefully build for all 3 main platforms - Linux, Windows and Mac OSX. If anyone can get it working on more niche systems like a BSD derivative, please do contact me. Apart from denouncing my atheism and worshipping you as my new deity, I'd love to know just how the heck you managed it.
 
-### Why the name 'NILTS'?
+### There's... not much to do
 
-See above
+Yes. I realised. NILTS is still in heavy development. VERY heavy development. At the moment, it runs, you see graphics, and that's it. It's not fun.
 
 ### Why so many utterly redundant FAQ questions?
 
