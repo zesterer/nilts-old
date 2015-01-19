@@ -108,16 +108,16 @@ class Position
 	
 	public void accelerate(double x, double y, double z = 0)
 	{
-		this._mx += x * Consts.time_delta;
-		this._my += y * Consts.time_delta;
-		this._mz += z * Consts.time_delta;
+		this._mx += x;
+		this._my += y;
+		this._mz += z;
 	}
 	
 	public void applyForce(double fx, double fy, double fz = 0)
 	{
-		this._mx += Consts.time_delta * fx / this._mass;
-		this._my += Consts.time_delta * fy / this._mass;
-		this._mz += Consts.time_delta * fz / this._mass;
+		this._mx += fx / this._mass;
+		this._my += fy / this._mass;
+		this._mz += fz / this._mass;
 	}
 	
 	public void drag(double amount, bool andz = false)
@@ -126,10 +126,10 @@ class Position
 		if (this._mass > 0)
 			amount /= this._mass;
 		
-		this._mx -= Math.copysign(Consts.time_delta * amount * Math.pow(Math.fabs(this._mx), 1.2), this._mx);
-		this._my -= Math.copysign(Consts.time_delta * amount * Math.pow(Math.fabs(this._my), 1.2), this._my);
+		this._mx -= Math.copysign(amount * Math.pow(Math.fabs(this._mx), 1.2), this._mx);
+		this._my -= Math.copysign(amount * Math.pow(Math.fabs(this._my), 1.2), this._my);
 		if (andz)
-			this._mz -= Math.copysign(Consts.time_delta * amount * Math.pow(Math.fabs(this._mz), 1.2), this._mz);
+			this._mz -= Math.copysign(amount * Math.pow(Math.fabs(this._mz), 1.2), this._mz);
 	}
 	
 	public void checkPosition()

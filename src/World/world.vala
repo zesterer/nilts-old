@@ -1,7 +1,10 @@
+//TODO - Rewrite this whole bloody thing, NOT using a nullable array for region storage!
+
 class World : Object
 {
 	public uint32 seed = 15004026;
 	public int64 ticker;
+	public bool running;
 	
 	public Region?[,] regions;
 	//This region is used when a region has not been loaded, and represents empty space. This prevents crashes and so on.
@@ -49,6 +52,7 @@ class World : Object
 		
 		//Define the world tick
 		this.ticker = 0;
+		this.running = true;
 		
 		//The region nullable array
 		this.regions = new Region[Consts.world_size, Consts.world_size];
@@ -68,8 +72,8 @@ class World : Object
 		{	
 			//Add it to the quewe
 			this.region_generator.mutex.lock();
-			this.region_generator.generating_regions.add(this.regions[x, y]);
-			this.region_generator.generating_regions_operation.add("generate");
+			this.region_generator.generating_regions.append(this.regions[x, y]);
+			this.region_generator.generating_regions_operation.append("generate");
 			this.region_generator.mutex.unlock();
 		}
 		else
@@ -164,6 +168,8 @@ class World : Object
 				this.regions[x, y] = null;
 			}
 		}
+		
+		this.running = false;
 	}
 }
 
@@ -171,9 +177,9 @@ class RegionGenerator : Object
 {
 	public World world;
 	//The regions that are in the generation quewe
-	public Gee.ArrayList<Region?> generating_regions;
+	public List<Region?> generating_regions;
 	//The operation that needs to be performed on them
-	public Gee.ArrayList<string> generating_regions_operation;
+	public List<string> generating_regions_operation;
 	//The mutex lock
 	public Mutex mutex;
 	
@@ -182,22 +188,22 @@ class RegionGenerator : Object
 		this.world = world;
 		
 		//Which regions should the independent thread generate?
-		this.generating_regions = new Gee.ArrayList<Region?>();
+		this.generating_regions = new List<Region?>();
 		//The operation
-		this.generating_regions_operation = new Gee.ArrayList<string>();
+		this.generating_regions_operation = new List<string>();
 		//The mutex lock
 		this.mutex = Mutex();
 	}
 	
 	public void* generateMethod()
 	{
-		while (true)
+		while (this.world.running)
 		{
-			if (this.generating_regions.size > 0)
+			if (this.generating_regions.length() > 0)
 			{
 				this.mutex.lock();
-				string operation = this.generating_regions_operation[0];
-				Region? region = this.generating_regions[0];
+				string operation = this.generating_regions_operation.nth_data(0);
+				Region? region = this.generating_regions.nth_data(0);
 				this.mutex.unlock();
 				
 				if (operation == "generate")
@@ -214,10 +220,12 @@ class RegionGenerator : Object
 				}
 				
 				this.mutex.lock();
-				if (this.generating_regions.size > 0)
+				if (this.generating_regions.length() > 0)
 				{
-					this.generating_regions.remove_at(0);
-					this.generating_regions_operation.remove_at(0);
+					unowned List<Region?> todelete1 = this.generating_regions.nth(0);
+					this.generating_regions.delete_link(todelete1);
+					unowned List<string> todelete2 = this.generating_regions_operation.nth(0);
+					this.generating_regions_operation.delete_link(todelete2);
 				}
 				this.mutex.unlock();
 				

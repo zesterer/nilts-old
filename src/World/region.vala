@@ -144,10 +144,10 @@ class Region : Object
 		{
 			//Add it to the quewe
 			this.mother.region_generator.mutex.lock();
-			if ((this in this.mother.region_generator.generating_regions) == false)
+			if ((this.mother.region_generator.generating_regions.index(this) >= 0) == false)
 			{
-				this.mother.region_generator.generating_regions.add(this);
-				this.mother.region_generator.generating_regions_operation.add("render");
+				this.mother.region_generator.generating_regions.append(this);
+				this.mother.region_generator.generating_regions_operation.append("render");
 			}
 			this.mother.region_generator.mutex.unlock();
 		}
@@ -177,7 +177,7 @@ class Region : Object
 			{			
 				//Find the cell
 				cell = this.cells[x, y];
-				GLib.Rand ran = new GLib.Rand.with_seed(cell.seed);
+				GLib.Rand ran = new GLib.Rand.with_seed(cell.seed + cell.x * Consts.region_size + cell.y);
 				
 				//Set the position in the texture
 				position = {(float)(x * Consts.cell_size + Consts.cell_size / 2), (float)(y * Consts.cell_size + Consts.cell_size / 2)};
@@ -196,9 +196,9 @@ class Region : Object
 				if (Consts.vary_cell_colour && GroundTypes.types[cell.ground_type].vary_texture_colour)
 				{
 					col.a = uint8.max(col.a + (uint8)uint32.min((int32)cell.temperature, 0), 128);
-					col.r = uint8.max(col.r - (uint8)ran.int_range(0, 20), 128);
-					col.g = uint8.max(col.g - (uint8)ran.int_range(0, 20), 128);
-					col.b = uint8.max(col.b - (uint8)ran.int_range(0, 20), 128);
+					col.r = uint8.max(col.r - (uint8)ran.int_range(0, 50), 128);
+					col.g = uint8.max(col.g - (uint8)ran.int_range(0, 50), 128);
+					col.b = uint8.max(col.b - (uint8)ran.int_range(0, 50), 128);
 					
 					if (ran.boolean())
 					{
@@ -234,8 +234,8 @@ class Region : Object
 
 struct Cell
 {
-	public int16 x;
-	public int16 y;
+	public int8 x;
+	public int8 y;
 	
 	public uint32 seed;
 	

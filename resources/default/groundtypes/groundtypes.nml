@@ -1,0 +1,48 @@
+{
+	$space;
+	name = space;
+	texture-number = 0;
+	vary-texture-color = true;
+}
+
+{
+	$grass;
+	name = Space;
+	texture-number = 1;
+	vary-texture-color = true;
+}
+
+{
+	$sand;
+	name = Sand;
+	texture-number = 2;
+	vary-texture-color = true;
+}
+
+{
+	$water;
+	name = Water;
+	texture-number = 3;
+	vary-texture-color = true;
+}
+
+{
+	$ice;
+	name = Ice;
+	texture-number = 4;
+	vary-texture-color = true;
+}
+
+{
+	$snow;
+	name = Snow;
+	texture-number = 5;
+	vary-texture-color = true;
+}
+
+{
+	$swamp;
+	name = Swamp;
+	texture-number = 6;
+	vary-texture-color = true;
+}

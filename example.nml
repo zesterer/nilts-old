@@ -1,0 +1,26 @@
+;TABLE-NAME=materials;NML-VERSION=0.0;]
+
+{
+	; This is an example, please don't use in actual NILT§. Just a show of the NILT§ markup language.
+	; This is the wood object.
+	
+	$wood;
+	name = %n Wood; The name of the wood
+	name-variants = Pine, Beech, Oak, Elm, Maple; Many kinds of wood!!!
+	flexibility = 0.7; Some flexibility!'; All good.
+	energy = 0.8;
+	explosiveness = 0.1;Random comment.
+	features = can-burn, can-rot;Bah.
+	properties = brown, light, hollow, splintering;
+}
+
+{
+	$water;
+	name = %n Water;
+	name-variants = salt, fresh, stagnant;
+	flexibility = 1.0;
+	energy = 0.5;
+	explosiveness = 0.0001;
+	features = liquid, stops-fire;
+	properties = wet, transparent, cool, refreshing;
+}

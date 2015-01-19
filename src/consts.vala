@@ -40,7 +40,6 @@ namespace Consts
 	public Timer timer;
 	public double fps_target = 60;
 	public double fps_current = 60;
-	public double time_delta = 1.0;
 	public bool has_threads = false;
 	public const bool use_threads = false;
 	
@@ -72,7 +71,7 @@ namespace Consts
 	public void output(string message, string type = "DEBUG")
 	{
 		if (Consts.debug || type != "DEBUG")
-			stdout.printf("[" + type + "] " + message + "\n");
+			stdout.printf("[" + type.up() + "] " + message + "\n");
 	}
 }
 

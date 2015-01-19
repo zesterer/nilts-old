@@ -159,14 +159,22 @@ class Display : Object
 		//Handle all the events that have happened this frame. Executed last to prevent extra frame. NOT SO FOR KEYBOARD DETECTION!
 		this.event_handler.tick();
 		
-		//What's the FPS?
-		//handle the fps and delta time and all that rubbish
+		//Handle the fps and delta time and all that rubbish
 		if (Consts.debug)
 		{
+			//Actually use the timer
 			this.seconds = Consts.timer.elapsed(out this.microseconds);
-			Consts.fps_current = double.min((double)(Consts.fps_target) / seconds, Consts.fps_target);
-			Consts.time_delta = (double)60 / Consts.fps_current;
-			//Thread.usleep((int)(100 * ((double)Consts.fps_target - this.seconds)));
+			
+			//How many seconds should we sleep for?
+			double seconds_to_go = double.max(0, 1.0 / Consts.fps_target - this.seconds);
+			
+			//Find the FPS
+			Consts.fps_current = double.max(0.001, double.min(Consts.fps_target, 1.0 / this.seconds));
+			
+			//Sleep for the extra unused time
+			Thread.usleep((int)(seconds_to_go * 1000));
+			
+			Consts.timer.reset();
 		}
 	}
 	

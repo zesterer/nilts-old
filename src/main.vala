@@ -56,7 +56,6 @@ class Application : GLib.Object
 		 
 		while (Consts.running)
 		{
-			Consts.timer.reset();
 			this.world.tick();
 			this.display.tick();
 		}
@@ -66,6 +65,10 @@ class Application : GLib.Object
 int main(string[] args)
 {
 	Application application = new Application(args);
+	
+	NMLParser parser = new NMLParser();
+	parser.parseFile("example.nml");
+	
 	if (Consts.running)
 		application.run();
 	
