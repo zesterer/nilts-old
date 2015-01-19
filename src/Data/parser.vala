@@ -28,10 +28,10 @@ class NMLParser : Object
 			DataInputStream data_stream = new DataInputStream(file.read());
 		
 			//The reading loop
-			int count;
-			while ((line += data_stream.read_line(null)) != null)
+			int count = 0;
+			while ((data += data_stream.read_line(null)) != null)
 			{
-				line += "\n";
+				data += "\n";
 				count += 1;
 			}
 			
@@ -46,20 +46,20 @@ class NMLParser : Object
 		this.parseString(data);
 	}
 	
-	public parseString(string data)
+	public void parseString(string data)
 	{
 		
 	}
 }
 
-struct NMLParserObject
+class NMLParserObject
 {
-	string name;
-	List<NMLParserProperty> properties;
+	public string name;
+	public List<NMLParserProperty> properties;
 }
 
-struct NMLParserProperty
+class NMLParserProperty
 {
-	string id;
-	string data;
+	public string id;
+	public string data;
 }

@@ -21,6 +21,7 @@ src/Display/interface.vala \
 src/Data/properties.vala \
 src/Data/items.vala \
 src/Data/inventory.vala \
+src/Data/parser.vala \
 src/consts.vala \
 -C
 
@@ -49,6 +50,7 @@ src/Display/interface.c \
 src/Data/properties.c \
 src/Data/items.c \
 src/Data/inventory.c \
+src/Data/parser.c \
 src/consts.c \
  -Ilibraries/CSFML-2.1/include -Ilibraries/gee/include -Ilibraries/glib2/include
 
@@ -73,8 +75,9 @@ interface.o \
 properties.o \
 items.o \
 inventory.o \
+parser.o \
 consts.o \
--lgee-0.8 -lgobject-2.0 -lglib-2.0 -Llibraries/gee/lib -Llibraries/shared-lib -lcsfml-window -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-network -lm \
+-lgee-0.8 -lgobject-2.0 -lglib-2.0 -lgio-2.0 -Llibraries/gee/lib -Llibraries/shared-lib -lcsfml-window -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-network -lm \
 -fsanitize=address
 
 #NOT NEEDED AT THE MOMENT:
