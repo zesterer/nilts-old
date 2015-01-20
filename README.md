@@ -56,7 +56,7 @@ NOTE: If you have problems when compiling - errors about missing libraries - fir
 
 ### What are the controls?
 
-WASD control movement. Q and E rotate the view. Nothing more yet.
+WASD control movement. Q and E rotate the view. Arrow keys to look around. Nothing more yet.
 
 ### What features are on the roadmap?
 

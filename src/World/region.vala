@@ -167,6 +167,7 @@ class Region : Object
 		
 		//Clear it
 		this.texture.clear(SFML.Graphics.black);
+		this.texture.set_active(true);
 		
 		unowned Cell cell;
 		
@@ -227,6 +228,8 @@ class Region : Object
 		}
 		
 		this._texture.display();
+		
+		this.texture.set_active(false);
 		
 		this.renderHasBeenCalled = false;
 	}

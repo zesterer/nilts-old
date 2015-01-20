@@ -17,7 +17,7 @@ namespace Render
 			for (int y = -regions_in_window_x / 2; y < regions_in_window_x / 2; y ++)
 			{
 				unowned SFML.Graphics.Texture? tex = null;
-				Region? region;
+				unowned Region? region;
 				
 				//Grab the bloody texture from the region and set it
 				region = world.getRegion((int)pos.regionX + x, (int)pos.regionY + y);
@@ -171,9 +171,43 @@ namespace Render
 			draw_position = {(float)(Consts.cell_size / 2), (float)(Consts.cell_size / 2)};
 			cellsprite.set_origin(draw_position);
 			
-			cellsprite.set_texture(Textures.types[5], true);
+			cellsprite.set_texture(Textures.types[10], true);
 			
 			window.draw_sprite(cellsprite, null);
+		}
+	}
+	
+	void drawParticles(SFML.Graphics.RenderWindow window, World world, Position pos)
+	{
+		SFML.Graphics.Sprite cellsprite = new SFML.Graphics.Sprite();
+		SFML.System.Vector2f draw_position;
+		
+		Particle particle;
+		
+		for (int x = 0; x < world.particles.length(); x ++)
+		{
+			//define the entity for convenience
+			particle = world.particles.nth_data(x);
+			
+			//Create the particle sprite
+			SFML.Graphics.CircleShape particle_shape = new SFML.Graphics.CircleShape();
+			particle_shape.set_radius(particle.size);
+			
+			//Set the position
+			float posx = (float)(particle.pos.x - pos.x);
+			float posy = (float)(particle.pos.y - pos.y);
+			draw_position = {posx + Consts.view_width / 2, posy + Consts.view_height / 2};
+			particle_shape.set_position(draw_position);
+			
+			//Set the origin
+			draw_position = {(float)(particle.size / 2), (float)(particle.size / 2)};
+			particle_shape.set_origin(draw_position);
+			
+			particle_shape.set_fill_color(particle.col);
+			
+			//particle_shape.set_texture(Textures.types[10], true);
+			
+			window.draw_circle_shape(particle_shape, null);
 		}
 	}
 	

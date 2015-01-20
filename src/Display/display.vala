@@ -138,6 +138,7 @@ class Display : Object
 		//First, draw all the stuffs
 		this.window.clear({0, 0, 0, 255});
 		Render.drawMap(this.window, this.world, this.pos);
+		Render.drawParticles(this.window, this.world, this.pos);
 		Render.drawEntities(this.window, this.world, this.pos);
 		Render.drawFog(this.window, this.world, this.pos);
 		

@@ -1,0 +1,48 @@
+{
+	$grass
+	texture-position = 0, 0
+	texture-size = 32, 32
+	texture-image = grass.png
+}
+
+{
+	$sand
+	texture-position = 0, 0
+	texture-size = 32, 32
+	texture-image = grass.png
+}
+
+{
+	$water
+	texture-position = 0, 0
+	texture-size = 32, 32
+	texture-image = water.png
+}
+
+{
+	$ice
+	texture-position = 0, 0
+	texture-size = 32, 32
+	texture-image = ice.png
+}
+
+{
+	$snow
+	texture-position = 0, 0
+	texture-size = 32, 32
+	texture-image = snow.png
+}
+
+{
+	$swamp
+	texture-position = 0, 0
+	texture-size = 32, 32
+	texture-image = swamp.png
+}
+
+{
+	$maxus
+	texture-position = 0, 0
+	texture-size = 32, 32
+	texture-image = maxus.png
+}

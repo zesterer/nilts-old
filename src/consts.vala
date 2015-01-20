@@ -115,6 +115,11 @@ namespace Maths
 		return 0;
 	}
 	
+	public int vectorDirection(double x, double y)
+	{
+		return (int)(Math.atan2(x, -y) * 180 / Math.PI);
+	}
+	
 	public int32 lerpValue(int32 a, int32 b, double x)
 	{
 		return (int32)(a + (double)(b - a) * x);
@@ -123,5 +128,21 @@ namespace Maths
 	public uint32 pointDistance(int32 x1, int32 y1, int32 x2, int32 y2)
 	{
 		return (uint32)Math.sqrt(Math.pow((double)(x1-x2), 2) + Math.pow((double)(y1-y2), 2));
+	}
+	
+	public int angleDifference(int angle0, int angle1)
+	{
+    	return ((((angle0 - angle1) % 360) + 540) % 360) - 180;
+	}
+	
+	public int rotateTo(int direction, int target, int rate)
+	{
+		int diff = Maths.angleDifference(target, direction);
+		if ((-rate <= diff && rate >= diff) || (rate <= diff && -rate >= diff))
+			return direction + diff;
+		else if ((diff <= -rate && rate >= -rate) || (rate <= -rate && diff >= -rate))
+			return direction - rate;
+		else
+			return direction + rate;
 	}
 }

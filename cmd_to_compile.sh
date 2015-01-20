@@ -9,6 +9,7 @@ src/World/ground_types.vala \
 src/World/block_types.vala \
 src/World/position.vala \
 src/World/eventmanager.vala \
+src/World/particle.vala \
 src/Entity/entity.vala \
 src/Graphics/texture.vala \
 src/Generation/noise.vala \
@@ -38,6 +39,7 @@ src/World/ground_types.c \
 src/World/block_types.c \
 src/World/position.c \
 src/World/eventmanager.c \
+src/World/particle.c \
 src/Entity/entity.c \
 src/Graphics/texture.c \
 src/Generation/noise.c \
@@ -63,6 +65,7 @@ ground_types.o \
 block_types.o \
 position.o \
 eventmanager.o \
+particle.o \
 entity.o \
 texture.o \
 noise.o \

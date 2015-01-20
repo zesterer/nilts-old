@@ -16,6 +16,9 @@ class World : Object
 	//public Inventory[] inventories;
 	//public Item[] items;
 	
+	//The particles
+	public List<Particle> particles;
+	
 	//The actual generator threads and stuff
 	public RegionGenerator region_generator;
 	public Thread<void*> generator_thread;
@@ -54,6 +57,9 @@ class World : Object
 		this.ticker = 0;
 		this.running = true;
 		
+		//The particles
+		this.particles = new List<Particle>();
+		
 		//The region nullable array
 		this.regions = new Region[Consts.world_size, Consts.world_size];
 		
@@ -83,7 +89,7 @@ class World : Object
 		}
 	}
 	
-	public Region getRegion(int x, int y) //Find a region
+	public unowned Region getRegion(int x, int y) //Find a region
 	{	
 		if ((x >= Consts.world_size) || (y >= Consts.world_size) || (x < 0) || (y < 0)) //We're outside the world.
 			return this.empty_region;
@@ -143,8 +149,21 @@ class World : Object
 		//Do stuff in the world
 		//Tick all entities
 		for (int x = 0; x < this.entities.length(); x ++)
-		{
 			this.entities.nth_data(x).tick();
+		
+		//Tick all particles
+		for (int x = 0; x < this.particles.length(); x ++)
+			this.particles.nth_data(x).tick();
+		
+		//Find out which particles need deleting
+		for (int x = 0; x < this.particles.length(); x ++)
+		{
+			if (this.particles.nth_data(x).lifetime <= 0)
+			{
+				unowned List<Particle> todelete = this.particles.nth(0);
+				this.particles.delete_link(todelete);
+				x -= 1;
+			}
 		}
 		
 		//Check for unload-able regions
@@ -203,7 +222,7 @@ class RegionGenerator : Object
 			{
 				this.mutex.lock();
 				string operation = this.generating_regions_operation.nth_data(0);
-				Region? region = this.generating_regions.nth_data(0);
+				unowned Region? region = this.generating_regions.nth_data(0);
 				this.mutex.unlock();
 				
 				if (operation == "generate")
@@ -239,5 +258,41 @@ class RegionGenerator : Object
 		Thread.exit(0);
 		
 		return null;
+	}
+}
+
+class NWorld : Object
+{
+	private uint32 _seed;
+	private bool _running;
+	private int64 _tick;
+	
+	public NWorld()
+	{
+		
+	}
+	
+	public uint32 seed
+	{
+		get
+		{return this._seed;}
+		set
+		{Consts.output("Cannot manually set seed");}
+	}
+	
+	public bool running
+	{
+		get
+		{return this._running;}
+		set
+		{this._running = value;}
+	}
+	
+	public int64 tick
+	{
+		get
+		{return this._tick;}
+		set
+		{Consts.output("Cannot manually set tick");}
 	}
 }

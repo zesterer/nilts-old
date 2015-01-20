@@ -60,5 +60,6 @@ namespace Textures
 		Textures.rect = {0, 0, 96, 64};	
 		Textures.types[9] = Tex.fromFile("fps_background", "uielement");
 		Textures.rect = {0, 0, 32, 32};
+		Textures.types[10] = Tex.fromFile("maxus", "entity");
 	}
 }

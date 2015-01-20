@@ -6,6 +6,10 @@ class EventManager : GLib.Object
 	public bool KEY_S = false;
 	public bool KEY_Q = false;
 	public bool KEY_E = false;
+	public bool KEY_RIGHT = false;
+	public bool KEY_UP = false;
+	public bool KEY_LEFT = false;
+	public bool KEY_DOWN = false;
 	
 	public World world;
 	

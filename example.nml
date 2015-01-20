@@ -24,3 +24,10 @@
 	features = liquid, stops-fire;
 	properties = wet, transparent, cool, refreshing;
 }
+
+		 	 	 	 {
+	   			 	 	 	  	 	$cow in a field
+	 	  		name of the animal  		   = 	 Bessie the mad cow
+		 	 	 	 	 	 	 	 	 				flexibility of the cow 	=           50 out of 12
+		  	 	 	 	 explosiveness of the cow                               =				 1 out of a possible 476 ways to explode
+	 	   	 }

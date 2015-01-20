@@ -26,6 +26,10 @@ class EventHandler : Object
 		this.world.event_manager.KEY_S = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.S);
 		this.world.event_manager.KEY_Q = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.Q);
 		this.world.event_manager.KEY_E = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.E);
+		this.world.event_manager.KEY_RIGHT = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.RIGHT);
+		this.world.event_manager.KEY_UP = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.UP);
+		this.world.event_manager.KEY_LEFT = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.LEFT);
+		this.world.event_manager.KEY_DOWN = SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.DOWN);
 		
 		if (SFML.Window.Keyboard.is_key_pressed(SFML.Window.KeyCode.Q))
 		{
