@@ -20,15 +20,8 @@ namespace Render
 				unowned Region? region;
 				
 				//Grab the bloody texture from the region and set it
-				region = world.getRegion((int)pos.regionX + x, (int)pos.regionY + y);
-				if (region.isEmpty || region.texture == null) //We're outside the world
-				{
-					if (region.texture == null)
-						region.renderUpdate();
-					tex = null;
-				}
-				else
-					tex = region.texture.get_texture();
+				region = world.loadRegion((int)pos.regionX + x, (int)pos.regionY + y);
+				tex = region.texture.get_texture();
 				
 				//We've got the texture, so keep it from unloading!
 				region.updateTimeout();
@@ -82,7 +75,7 @@ namespace Render
 				for (int y = -regions_in_window_x / 2; y < regions_in_window_x / 2; y ++)
 				{
 					//Grab the bloody texture from the region and set it
-					region = world.getRegion((int)pos.regionX + x, (int)pos.regionY + y);
+					region = world.loadRegion((int)pos.regionX + x, (int)pos.regionY + y);
 					//tex = region.texture.get_texture();
 					//We've got the texture, so keep it from unloading!
 					region.updateTimeout();
@@ -110,7 +103,7 @@ namespace Render
 							
 							if (!(draw_position.x < -Consts.cell_size * 2 || draw_position.x > Consts.view_width + Consts.cell_size * 2 || draw_position.y < -Consts.cell_size * 2 || draw_position.y > Consts.view_height + Consts.cell_size * 2))
 							{
-								alt = region.getCell(xx, yy).altitude;
+								alt = double.max(0, region.getCell(xx, yy).altitude);
 							
 								//What colour are we using? Let's find out:
 								if (alt > pos.z + Consts.fog_dist)

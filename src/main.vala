@@ -59,6 +59,8 @@ class Application : GLib.Object
 			this.world.tick();
 			this.display.tick();
 		}
+		
+		Consts.output("Closed the application");
 	}
 }
 

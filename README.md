@@ -6,7 +6,7 @@ A game about many things. I don't know what, since most content is randomly gene
 Welcome to the git repository for NILTS. NILTS is a procedurally generated RPG/roguelike that introduces various mechanics inspired by such games as Dwarf Fortress, Minecraft and Nethack. Unlike the latter, movement is neither restricted to a grid nor restricted to two dimensions. NILTS will eventually attempt to introduce artifically intelligent civilisations, NPCs and many species of wild animal that change as time goes on both in population, physical appearance and demographics, creating a dynamic and fun game that can involve the player for many ~~hours~~ ~~days~~ years. It's emphasis on procedural generation means that every time you play NILTS, gameplay is always unique.
 
 ![alt 
-tag](https://raw.githubusercontent.com/zesterer/nilts/master/documents/screenshots/new-screenshot.png)
+tag](https://raw.githubusercontent.com/zesterer/nilts/master/documents/screenshots/2014-01-21.png)
 
 ## Current features
 
@@ -18,6 +18,8 @@ Of course, there's a reason this is on github. Most notably because it's not fin
 - Basic player character
 - Movement, momentum and mass
 - Basic particle system
+- Variable terrain colour system (to make it look nice)
+- Variable water
 - Basic player graphics and rotation system
 
 ## Features currently in development

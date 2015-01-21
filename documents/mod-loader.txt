@@ -1,0 +1,13 @@
+Mod loader
+==========
+
+1) Check resources directory for mods (list all mod directories)
+2) Check for the existence of a default mod (defined by the mod's config.nml, not their name)
+3) Check that each mod has it's mod dependencies filled. If not, do not load the mod but inform the user.
+3) As each resource type is defined, read through mods and assign resource IDs to resource names. This prevents naming conflicts. Resource names are based on the mod name and the resource name.
+	- First find a list of all resources to be loaded
+	- Then, assign a specific numerical ID to each resource
+	- As data is loaded in, change equivalent IDs to the in-game numerical IDs.
+	- This means that an item's ID is not constant between games.
+4) Load in the resource data for each resource.
+5) Check for extra configuration options, then start NILTS.

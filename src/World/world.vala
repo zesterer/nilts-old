@@ -1,6 +1,6 @@
-//TODO - Rewrite this whole bloody thing, NOT using a nullable array for region storage!
+/*//TODO - Rewrite this whole bloody thing, NOT using a nullable array for region storage!
 
-class World : Object
+class NWorld : World
 {
 	public uint32 seed = 15004026;
 	public int64 ticker;
@@ -25,7 +25,7 @@ class World : Object
 	
 	public EventManager event_manager;
 	
-	public World()
+	public NWorld()
 	{
 		GLib.Rand ran = new GLib.Rand.with_seed(this.seed);
 		this.seed = ran.next_int();
@@ -259,17 +259,59 @@ class RegionGenerator : Object
 		
 		return null;
 	}
-}
+}*/
 
-class NWorld : Object
+class World : Object
 {
-	private uint32 _seed;
+	//The seed
+	private uint32 _seed = 0;
 	private bool _running;
-	private int64 _tick;
+	private int64 _tick_counter;
 	
-	public NWorld()
+	//private List<Region> _regions;
+	private Region?[,] _regions;
+	private Region _empty_region;
+	
+	public List<Entity> entities;
+	public Player player;
+	
+	public List<Particle> particles;
+	
+	public EventManager event_manager;
+	
+	public World()
 	{
+		//The seed
+		GLib.Rand ran = new GLib.Rand.with_seed(this.seed);
+		this.seed = ran.next_int();
 		
+		//Ticker and running
+		this._running = true;
+		this._tick_counter = 0;
+		
+		//The regions
+		//this._regions = new List<Region>();
+		this._regions = new Region[Consts.world_size, Consts.world_size];
+		this._empty_region = new Region(this, 0, 0, true);
+		this._empty_region.generate();
+		
+		//The entities list
+		this.entities = new List<Entity>();
+		
+		//Player!
+		this.player = new Player(this.seed + 1, this);
+		this.player.pos.setPos(Consts.world_size_pixels / 2, Consts.world_size_pixels / 2);
+		this.entities.append((Entity)this.player);
+		//Nothing as good as a test entity!
+		Entity someguy = (Entity)new NPC(this.seed, this);
+		someguy.pos.setPos(Consts.world_size_pixels / 2, Consts.world_size_pixels / 2);
+		this.entities.append(someguy);
+		
+		//The particles
+		this.particles = new List<Particle>();
+		
+		//The event manager
+		this.event_manager = new EventManager(this);
 	}
 	
 	public uint32 seed
@@ -280,7 +322,7 @@ class NWorld : Object
 		{Consts.output("Cannot manually set seed");}
 	}
 	
-	public bool running
+	public new bool running
 	{
 		get
 		{return this._running;}
@@ -288,11 +330,134 @@ class NWorld : Object
 		{this._running = value;}
 	}
 	
-	public int64 tick
+	public int64 tick_counter
 	{
 		get
-		{return this._tick;}
+		{return this._tick_counter;}
 		set
 		{Consts.output("Cannot manually set tick");}
+	}
+	
+	public unowned Region? getRegion(int x, int y)
+	{
+		if ((x >= Consts.world_size) || (y >= Consts.world_size) || (x < 0) || (y < 0)) //We're outside the world.
+			return this._empty_region;
+		
+		unowned Region region = this._regions[x, y];
+		return region;
+	}
+	
+	public unowned Region loadRegion(int x, int y) //Find a region
+	{
+		unowned Region? region = this.getRegion(x, y);
+		
+		if (region != null) //We're outside the world.
+		{
+			region.updateTimeout();
+			return region;
+		}
+		else
+		{
+			this._regions[x, y] = new Region(this, x, y);
+			region = this._regions[x, y];
+			region.generate();
+			return region;
+		}
+	}
+	
+	public Cell getCell(int32 x, int32 y)
+	{
+		x /= Consts.cell_size;
+		y /= Consts.cell_size;
+		return this.loadRegion(x / Consts.region_size, y / Consts.region_size).getCell(x % Consts.region_size, y % Consts.region_size);
+	}
+	
+	public double getAltitude(int32 x, int32 y)
+	{
+		double alt_tl = this.getCell(x, y).altitude;
+		double alt_tr = this.getCell(x + Consts.cell_size, y).altitude;
+		double alt_bl = this.getCell(x, y + Consts.cell_size).altitude;
+		double alt_br = this.getCell(x + Consts.cell_size, y + Consts.cell_size).altitude;
+		
+		double toplerp = Maths.lerp(alt_tl, alt_tr, (double)(x % Consts.cell_size) / Consts.cell_size);
+		double bottomlerp = Maths.lerp(alt_bl, alt_br, (double)(x % Consts.cell_size) / Consts.cell_size);
+		
+		return Maths.lerp(toplerp, bottomlerp, (double)(y % Consts.cell_size) / Consts.cell_size);
+	}
+	
+	public void unloadRegion(int x, int y)
+	{
+		if (this._regions[x, y].canUnload())
+		{
+			this._regions[x, y] = null;
+			
+			//this.regions[region.pos.regionX, region.pos.regionY] = null;
+		}
+	}
+	
+	public void checkForUnload(bool ending = false)
+	{
+		for (int x = 0; x < Consts.world_size; x ++)
+		{
+			for (int y = 0; y < Consts.world_size; y ++)
+			{
+				if (this._regions[x, y] != null)
+				{
+					unowned Region region = this._regions[x, y];
+					if (region.isOutdated() || ending)
+					{
+						this.unloadRegion(x, y);
+					}
+				}
+			}
+		}
+	}
+	
+	public void tick()
+	{
+		this._tick_counter ++;
+		
+		//Do stuff in the world
+		//Tick all regions
+		for (int x = 0; x < Consts.world_size; x ++)
+		{
+			for (int y = 0; y < Consts.world_size; y ++)
+			{
+				if (this._regions[x, y] != null)
+				{
+					this._regions[x, y].tick();
+				}
+			}
+		}
+		
+		//Tick all entities
+		for (int count = 0; count < this.entities.length(); count ++)
+			this.entities.nth_data(count).tick();
+		
+		//Tick all particles
+		for (int count = 0; count < this.particles.length(); count ++)
+		{
+			this.particles.nth_data(count).tick();
+			
+			if (this.particles.nth_data(count).lifetime <= 0)
+			{
+				unowned List<Particle> todelete = this.particles.nth(count);
+				this.particles.delete_link(todelete);
+				count -= 1;
+			}
+		}
+		
+		//Check for unload-able regions
+		this.checkForUnload();
+		
+		//Detect events that have happened this frame.
+		this.event_manager.update();
+	}
+	
+	public void end()
+	{
+		this.checkForUnload(true);
+		
+		this.running = false;
 	}
 }

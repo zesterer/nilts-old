@@ -17,7 +17,9 @@ class Particle : GLib.Object
 	{
 		this.pos.tick();
 		this.lifetime -= 1;
-		if (this.lifetime < 127)
-			this.col = {this.col.r, this.col.g, this.col.b, (uint8)this.lifetime * 2};
+		//if (this.lifetime < 127)
+			//this.col = {this.col.r, this.col.g, this.col.b, (uint8)this.lifetime * 2};
+		while (this.lifetime < this.col.a && this.col.a > 0)
+			this.col.a -= 1;
 	}
 }

@@ -26,7 +26,7 @@ namespace Consts
 	public int view_max_size = 0;
 	public int view_rotation = 0;
 	public float view_rotation_radians = 0;
-	public double screen_scale = 1;
+	public double screen_scale = 1.0;
 	//Vector screen coordinates - for rotation, scaling, etc.
 	public SFML.System.Vector2f view_i;
 	public SFML.System.Vector2f view_j;
@@ -58,7 +58,7 @@ namespace Consts
 	public const int cell_size = 32;
 	
 	public const int region_lifetime = 600;
-	public const int render_lifetime = 10;
+	public const int render_lifetime = 300;
 	
 	public const int region_size_pixels = Consts.region_size * Consts.cell_size;
 	public const int32 world_size_cells = Consts.world_size * Consts.region_size;
@@ -125,9 +125,9 @@ namespace Maths
 		return (int32)(a + (double)(b - a) * x);
 	}
 	
-	public uint32 pointDistance(int32 x1, int32 y1, int32 x2, int32 y2)
+	public int32 pointDistance(int32 x1, int32 y1, int32 x2, int32 y2)
 	{
-		return (uint32)Math.sqrt(Math.pow((double)(x1-x2), 2) + Math.pow((double)(y1-y2), 2));
+		return (int32)Math.fabs(Math.sqrt(Math.pow((double)(x1-x2), 2) + Math.pow((double)(y1-y2), 2)));
 	}
 	
 	public int angleDifference(int angle0, int angle1)
@@ -144,5 +144,15 @@ namespace Maths
 			return direction - rate;
 		else
 			return direction + rate;
+	}
+	
+	public int pointDirection(int32 x0, int32 y0, int32 x1, int32 y1)
+	{
+		return (int)(-Math.atan2(-(y0 - y1),x0 - x1) * 180 / Math.PI);
+	}
+	
+	public double lerp(double a, double b, double x)
+	{
+		return a + (b - a) * x;
 	}
 }

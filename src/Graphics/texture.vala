@@ -6,12 +6,32 @@ namespace Textures
 	public SFML.Graphics.IntRect rect;
 	
 	public class Tex : SFML.Graphics.Texture
-	{
+	{	
 		public Tex()
 		{
 			base(1, 1);
 			if (Consts.debug)
 				Consts.output("Created a texture.");
+			
+			/*int r = 0;
+			int g = 0;
+			int b = 0;
+			int a = 0;
+			
+			SFML.Graphics.Image img = this.copy_to_image();
+			for (uint x = 0; x < this.get_size().x; x += 3)
+			{
+				for (uint y = 0; y < this.get_size().y; y += 3)
+				{
+					SFML.Graphics.Color c = img.get_pixel(x, y);
+					r += c.r;
+					g += c.g;
+					b += c.b;
+					a += c.a;
+				}
+			}*/
+			
+			//this.col = {(uint8)(r / (this.get_size().x / 3)), (uint8)(g / (this.get_size().x / 3)), (uint8)(b / (this.get_size().x / 3)), (uint8)(a / (this.get_size().x / 3))};
 		}
 		
 		public static Tex fromFile(string name, string type = "ground")

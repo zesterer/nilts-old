@@ -5,7 +5,7 @@ class Region : Object
 	public uint32 seed;
 	public Position pos;
 	
-	private int64 updateTimeoutCounter;
+	private int64 _update_timeout_counter;
 	
 	private SFML.Graphics.RenderTexture? _texture;
 	
@@ -14,6 +14,7 @@ class Region : Object
 	public bool isEmpty;
 	private bool generateHasBeenCalled;
 	private bool renderHasBeenCalled;
+	public bool texture_empty;
 	
 	public Region(World mother, int32 x, int32 y, bool isEmpty = false)
 	{
@@ -21,21 +22,36 @@ class Region : Object
 		
 		this.pos = new Position(x * Consts.region_size_pixels, y * Consts.region_size_pixels);
 		this.seed = mother.seed;
-		this.updateTimeoutCounter = this.mother.ticker;
+		this.updateTimeout();
 		
 		this.cells = new Cell[Consts.region_size, Consts.region_size];
+		this.init();
 		
 		this.isEmpty = isEmpty;
 		this.generateHasBeenCalled = false;
 		this.renderHasBeenCalled = false;
+		this.texture_empty = true;
 		
 		//It's nothing at the moment
-		this._texture = null;
+		//this._texture = null;
+	}
+	
+	public void init() //Set the region up correctly (not generation, just bare-bones)
+	{
+		for (int8 x = 0; x < Consts.region_size; x ++)
+		{
+			for (int8 y = 0; y < Consts.region_size; y ++)
+			{
+				this.cells[x, y] = {0, 0, 0, 0, 0};
+			}
+		}
 	}
 	
 	//Destructor
 	~Region()
 	{
+		//this._texture.close();
+		this._texture = null;
 		Consts.output("A region has been unloaded");
 	}
 	
@@ -51,7 +67,11 @@ class Region : Object
 	public unowned SFML.Graphics.RenderTexture? texture
 	{
 		get
-		{return this._texture;}
+		{
+			if (this.texture_empty)
+				this.renderUpdate();
+			return this._texture;
+		}
 		set
 		{Consts.output("Error: texture cannot be written to.");}
 	}
@@ -59,12 +79,12 @@ class Region : Object
 	//Update the timeout counter such that the region will not yet be marked for unloading
 	public void updateTimeout()
 	{
-		this.updateTimeoutCounter = this.mother.ticker;
+		this._update_timeout_counter = this.mother.tick_counter;
 	}
 	
 	public bool isOutdated()
 	{
-		if (this.updateTimeoutCounter + Consts.region_lifetime < this.mother.ticker)
+		if (this._update_timeout_counter + Consts.region_lifetime < this.mother.tick_counter)
 			return true;
 		return false;
 	}
@@ -104,8 +124,8 @@ class Region : Object
 						this.cells[x, y].ground_type = 2;
 					else
 					{
-						this.cells[x, y].ground_type = 3;
-						this.cells[x, y].altitude = 0;
+						this.cells[x, y].ground_type = 2;
+						//this.cells[x, y].altitude = 0;
 					}
 				}
 			}
@@ -134,28 +154,13 @@ class Region : Object
 	public void renderUpdate()
 	{
 		this.updateTimeout();
-		this.renderHasBeenCalled = true;
 		
 		if (this._texture == null)
 			this._texture = new SFML.Graphics.RenderTexture(Consts.region_size_pixels, Consts.region_size_pixels, false);
 		
 		//Update the rendering
-		if (Consts.has_threads)
-		{
-			//Add it to the quewe
-			this.mother.region_generator.mutex.lock();
-			if ((this.mother.region_generator.generating_regions.index(this) >= 0) == false)
-			{
-				this.mother.region_generator.generating_regions.append(this);
-				this.mother.region_generator.generating_regions_operation.append("render");
-			}
-			this.mother.region_generator.mutex.unlock();
-		}
-		else
-		{
-			//Straight-off render it
-			this.render();
-		}
+		this.renderHasBeenCalled = true;
+		this.render();
 	}
 	
 	public void render()
@@ -166,8 +171,8 @@ class Region : Object
 		SFML.Graphics.Color col;
 		
 		//Clear it
-		this.texture.clear(SFML.Graphics.black);
-		this.texture.set_active(true);
+		this._texture.clear(SFML.Graphics.black);
+		this._texture.set_active(true);
 		
 		unowned Cell cell;
 		
@@ -178,7 +183,7 @@ class Region : Object
 			{			
 				//Find the cell
 				cell = this.cells[x, y];
-				GLib.Rand ran = new GLib.Rand.with_seed(cell.seed + cell.x * Consts.region_size + cell.y);
+				GLib.Rand ran = new GLib.Rand.with_seed(this.seed + cell.seed + x * Consts.region_size + y);
 				
 				//Set the position in the texture
 				position = {(float)(x * Consts.cell_size + Consts.cell_size / 2), (float)(y * Consts.cell_size + Consts.cell_size / 2)};
@@ -188,18 +193,23 @@ class Region : Object
 				cellsprite.set_texture(Textures.types[GroundTypes.types[cell.ground_type].texture_number], true);
 				cellsprite.set_origin({Consts.cell_size / 2, Consts.cell_size / 2});
 				
-				//The default colour, scale and rotation
-				col = {255, 255, 255, 255};
+				//The default scale and rotation
 				cellsprite.set_scale({1, 1});
 				cellsprite.set_rotation(0);
 				
 				//Give it some variation
 				if (Consts.vary_cell_colour && GroundTypes.types[cell.ground_type].vary_texture_colour)
 				{
-					col.a = uint8.max(col.a + (uint8)uint32.min((int32)cell.temperature, 0), 128);
-					col.r = uint8.max(col.r - (uint8)ran.int_range(0, 50), 128);
-					col.g = uint8.max(col.g - (uint8)ran.int_range(0, 50), 128);
-					col.b = uint8.max(col.b - (uint8)ran.int_range(0, 50), 128);
+					//The default colour
+					col = {255, 255, 255, 255};
+					
+					//col.a = uint8.max(col.a + (uint8)uint32.min((int32)cell.temperature, 0), 128);
+					col.r = (uint8)(col.r * ran.double_range(0.85, 1.0));
+					col.g = (uint8)(col.g * ran.double_range(0.85, 1.0));
+					col.b = (uint8)(col.b * ran.double_range(0.85, 1.0));
+					//col.r = uint8.max(col.r - (uint8)ran.int_range(0, 50), 128);
+					//col.g = uint8.max(col.g - (uint8)ran.int_range(0, 50), 128);
+					//col.b = uint8.max(col.b - (uint8)ran.int_range(0, 50), 128);
 					
 					if (ran.boolean())
 					{
@@ -217,29 +227,48 @@ class Region : Object
 					}
 					
 					cellsprite.set_rotation(Random.int_range(0, 4) * 90);
+					
+					//Set that colour
+					cellsprite.set_color(col);
 				}
-				
-				//Set that colour
-				cellsprite.set_color(col);
 				
 				//Draw the ground finally!
 				this._texture.draw_sprite(cellsprite, null);
+				
+				if (cell.altitude <= 0)
+				{
+					//Reset the cellsprite
+					cellsprite.set_color({255, 255, 255, (uint8)double.min(double.max(-cell.altitude + 96, 96), 255)});
+					cellsprite.set_rotation(0);
+				
+					//Set to the water texture
+					cellsprite.set_texture(Textures.types[3], true);
+				
+					//Draw the water
+					this._texture.draw_sprite(cellsprite, null);
+				}
 			}
 		}
 		
 		this._texture.display();
 		
-		this.texture.set_active(false);
-		
+		this._texture.set_active(false);
 		this.renderHasBeenCalled = false;
+		this.texture_empty = false;
+	}
+	
+	public void tick()
+	{
+		if (this.mother.tick_counter - this._update_timeout_counter > Consts.render_lifetime)
+		{
+			this.texture_empty = true;
+			this._texture = null;
+		}
 	}
 }
 
 struct Cell
 {
-	public int8 x;
-	public int8 y;
-	
 	public uint32 seed;
 	
 	public int16 ground_type;

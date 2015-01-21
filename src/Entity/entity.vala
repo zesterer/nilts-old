@@ -36,23 +36,54 @@ class NPC : Entity
 	
 	public override void tick()
 	{
-		double x, y;
+		double x = 0;
+		double y = 0;
 		
-		if (Math.fabs(this.mother.player.pos.x - this.pos.x) > 128)
-			x = Math.copysign(2, this.mother.player.pos.x - this.pos.x);
-		else
-			x = 0;
+		int32 dist = Maths.pointDistance(this.mother.player.pos.x, this.mother.player.pos.y, this.pos.x, this.pos.y);
 		
-		if (Math.fabs(this.mother.player.pos.y - this.pos.y) > 128)
-			y = Math.copysign(2, this.mother.player.pos.y - this.pos.y);
-		else
-			y = 0;
+		if (dist > 200)
+		{
+			x = 2 * (double)(this.mother.player.pos.x - this.pos.x) / (double)dist;
+			y = 2 * (double)(this.mother.player.pos.y - this.pos.y) / (double)dist;
+		}
+		
+		if (dist > 100)
+			this.rot = Maths.rotateTo(this.rot, Maths.pointDirection(this.pos.x, this.pos.y, this.mother.player.pos.x, this.mother.player.pos.y) - 90, 5);
 		
 		this.pos.accelerate(x, y);
 		//Friction with the ground
 		this.pos.drag(0.3);
 		this.pos.z = this.mother.getCell(this.pos.x, this.pos.y).altitude;
 		this.pos.tick();
+		
+		this.createParticles();
+	}
+	
+	public void createParticles()
+	{
+		if (this.mother.tick_counter % 10 < 2)
+		{
+			Position pos = new Position(this.pos.x, this.pos.y);
+			GLib.Rand ran = new GLib.Rand.with_seed(this.seed + (int32)this.mother.tick_counter);
+			//Randomise the position
+			pos.add(ran.double_range(-0.4, 0.4), ran.double_range(-0.4, 0.4));
+			SFML.Graphics.Color col = {165, 155, 85, 255};
+			if (this.pos.z <= 0)
+			{
+				col = {200, 200, 250, 50};
+				pos.accelerate(ran.double_range(-0.6, 0.6), ran.double_range(-0.6, 0.6));
+				for (int c = 0; c < 4; c ++)
+				{
+					Position pos1 = new Position(this.pos.x, this.pos.y);
+					pos1.accelerate(ran.double_range(-0.3, 0.3), ran.double_range(-0.3, 0.3));
+					pos1.add(ran.double_range(-8, 8), ran.double_range(-8, 8));
+					this.mother.particles.append(new Particle(pos1, col, 60, 4));
+				}
+			}
+			else if (GroundTypes.types[this.mother.getCell(this.pos.x, this.pos.y).ground_type].name == "grass")
+				col = {15, 55, 15, 255};
+			this.mother.particles.append(new Particle(pos, col, 240, 4));
+		}
 	}
 }
 
@@ -70,7 +101,7 @@ class Player : NPC
 		//TODO - Rewrite this whole fucking method. It's horrible. Every last line of it.
 		//Seriously, don't even try to fix it. Bin all of it and start over.
 		
-		int speed = 2;
+		int speed = 1;
 		int rot = this.rot;
 		
 		if (this.mother.event_manager.KEY_W)
@@ -93,26 +124,14 @@ class Player : NPC
 		else if (Math.fabs(this.pos.mx) > 0.1 || Math.fabs(this.pos.my) > 0.1)
 			rot = Maths.vectorDirection(this.pos.mx, this.pos.my);
 		
-		if (this.mother.ticker % 20 < 4)
-		{
-			Position pos = new Position(this.pos.x, this.pos.y);
-			GLib.Rand ran = new GLib.Rand.with_seed(this.seed + (int32)this.mother.ticker);
-			//Randomise the momentum
-			pos.mx = ran.double_range(-0.4, 0.4);
-			pos.my = ran.double_range(-0.4, 0.4);
-			SFML.Graphics.Color col = {250, 240, 170, 255};
-			if (GroundTypes.types[this.mother.getCell(this.pos.x, this.pos.y).ground_type].name == "water")
-				col = {100, 100, 200, 255};
-			else if (GroundTypes.types[this.mother.getCell(this.pos.x, this.pos.y).ground_type].name == "grass")
-				col = {55, 95, 50, 255};
-			this.mother.particles.append(new Particle(pos, col));
-		}
-		
-		this.pos.z = this.mother.getCell(this.pos.x, this.pos.y).altitude;
+		//this.pos.z = this.mother.getCell(this.pos.x, this.pos.y).altitude;
+		this.pos.z = double.max(0, this.mother.getAltitude(this.pos.x, this.pos.y));
 		this.rot = Maths.rotateTo(this.rot, rot, 5);
 		
 		//Friction with the ground
-		this.pos.drag(0.3);
+		this.pos.drag(0.2);
 		this.pos.tick();
+		
+		this.createParticles();
 	}
 }

@@ -182,7 +182,7 @@ class Display : Object
 	public void close()
 	{
 		if (Consts.debug)
-			Consts.output("Closed the application.");
+			Consts.output("Closing the application...");
 		this.window.close();
 		this.world.end();
 		Consts.running = false;

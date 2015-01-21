@@ -98,6 +98,14 @@ class Position
 		{this._y = (double)value * Consts.region_size_pixels;}
 	}
 	
+	public void setPos(int32 x, int32 y, double z = 0)
+	{
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.checkPosition();
+	}
+	
 	public void add(double x, double y, double z = 0)
 	{
 		this._x += x;
