@@ -1,6 +1,6 @@
 namespace Textures
 {
-	public Tex[] types;
+	public List<Tex> types;
 	
 	//Define the texture size
 	public SFML.Graphics.IntRect rect;
@@ -64,22 +64,27 @@ namespace Textures
 		Textures.rect = {0, 0, 32, 32};	
 		
 		//Define the array
-		Textures.types = new Tex[256];
+		Textures.types = new List<Tex>();
 		
 		//Define the array components
-		Textures.types[0] = Tex.fromFile("space");
-		Textures.types[1] = Tex.fromFile("grass");
-		Textures.types[2] = Tex.fromFile("sand");
-		Textures.types[3] = Tex.fromFile("water");
-		Textures.types[4] = Tex.fromFile("ice");
-		Textures.types[5] = Tex.fromFile("snow");
-		Textures.types[6] = Tex.fromFile("swamp");
+		Textures.types.append(Tex.fromFile("space"));
+		Textures.types.append(Tex.fromFile("grass"));
+		Textures.types.append(Tex.fromFile("sand"));
+		Textures.types.append(Tex.fromFile("water"));
+		Textures.types.append(Tex.fromFile("ice"));
+		Textures.types.append(Tex.fromFile("snow"));
+		Textures.types.append(Tex.fromFile("swamp"));
 		Textures.rect = {0, 0, 80, 80};	
-		Textures.types[7] = Tex.fromFile("compass_dial", "uielement");
-		Textures.types[8] = Tex.fromFile("compass_background", "uielement");
+		Textures.types.append(Tex.fromFile("compass_dial", "uielement"));
+		Textures.types.append(Tex.fromFile("compass_background", "uielement"));
 		Textures.rect = {0, 0, 96, 64};	
-		Textures.types[9] = Tex.fromFile("fps_background", "uielement");
+		Textures.types.append(Tex.fromFile("fps_background", "uielement"));
 		Textures.rect = {0, 0, 32, 32};
-		Textures.types[10] = Tex.fromFile("maxus", "entity");
+		Textures.types.append(Tex.fromFile("maxus", "entity"));
+	}
+	
+	public void loadFromNMLObject(NMLObject object)
+	{
+		Textures.types.append(Tex.fromFile(object.getProperty("name"), object.getProperty("texture-type")));
 	}
 }

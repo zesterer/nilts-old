@@ -21,10 +21,12 @@ class Application : GLib.Object
 		if (Consts.running)
 		{
 			//Configure starting constants
+			Consts.init();
 			Textures.define();
 			BlockTypes.define();
 			GroundTypes.define();
 			NoiseTypes.define();
+			Mods.init();
 			
 			//Can we use threads?
 			if (Thread.supported() && Consts.use_threads)
@@ -67,9 +69,6 @@ class Application : GLib.Object
 int main(string[] args)
 {
 	Application application = new Application(args);
-	
-	NMLParser parser = new NMLParser();
-	parser.parseFile("example.nml");
 	
 	if (Consts.running)
 		application.run();

@@ -11,3 +11,22 @@ Mod loader
 	- This means that an item's ID is not constant between games.
 4) Load in the resource data for each resource.
 5) Check for extra configuration options, then start NILTS.
+
+i dont know the technical stuff well enough to appraise this or have a meaningful opinion
+its entirely up to BARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRY
+BARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARR
+YBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBAR
+RYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBA
+RRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYB
+ARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRYBARRY
+
+
+        #\
+       ## \
+      ###  \
+     ####   \
+    #####    \
+   ######     \
+  #######      \
+ ########       \
+#########________\

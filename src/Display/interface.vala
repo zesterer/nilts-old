@@ -72,8 +72,8 @@ class UIElement : GLib.Object
 	public virtual void update()
 	{
 		//Usually when the view is updated!
-		this.x = Consts.view_width / 2 - (this.width + 16);
-		this.y = Consts.view_height / 2 - (this.height + 16);
+		this.x = (float)Consts.screen_scale * Consts.view_width / 2 - (this.width + 16);
+		this.y = (float)Consts.screen_scale * Consts.view_height / 2 - (this.height + 16);
 		
 		this.render();
 	}
@@ -114,8 +114,8 @@ class FPSDisplay : UIElement
 	
 	public override void update()
 	{
-		this.x = -Consts.view_width / 2 + 16;
-		this.y = -Consts.view_height / 2 + 16;
+		this.x = -(float)Consts.screen_scale * Consts.view_width / 2 + 16;
+		this.y = -(float)Consts.screen_scale * Consts.view_height / 2 + 16;
 		
 		if (Consts.tick % (Consts.fps_target / 4) == 0)
 			this.render();
@@ -126,7 +126,7 @@ class FPSDisplay : UIElement
 		SFML.Graphics.Sprite cellsprite = new SFML.Graphics.Sprite();
 		
 		cellsprite.set_position({0, 0});
-		cellsprite.set_texture(Textures.types[9], true);
+		cellsprite.set_texture(Textures.types.nth_data(9), true);
 		this.texture.draw_sprite(cellsprite, null);
 		
 		this.text.set_string("FPS: " + ((int)Consts.fps_current).to_string());
@@ -166,8 +166,8 @@ class CompassDisplay : UIElement
 	
 	public override void update()
 	{
-		this.x = Consts.view_width / 2 - (this.width + 16);
-		this.y = -Consts.view_height / 2 + 16;
+		this.x = (float)Consts.screen_scale * Consts.view_width / 2 - (this.width + 16);
+		this.y = -(float)Consts.screen_scale * Consts.view_height / 2 + 16;
 		
 		this.rotation = -Consts.view_rotation;
 		
@@ -182,14 +182,14 @@ class CompassDisplay : UIElement
 		
 		//The compass background
 		cellsprite.set_position({0, 0});
-		cellsprite.set_texture(Textures.types[8], true);
+		cellsprite.set_texture(Textures.types.nth_data(8), true);
 		this.texture.draw_sprite(cellsprite, null);
 		
 		//The actual dial
 		cellsprite.set_origin({40, 40});
 		cellsprite.set_rotation(this.rotation);
 		cellsprite.set_position({40, 40});
-		cellsprite.set_texture(Textures.types[7], true);
+		cellsprite.set_texture(Textures.types.nth_data(7), true);
 		this.texture.draw_sprite(cellsprite, null);
 		
 		this.texture.display();

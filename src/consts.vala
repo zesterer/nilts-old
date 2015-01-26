@@ -5,6 +5,8 @@ namespace Consts
 	public const uint8[] version_values = {0, 0, 0};
 	public const string name_full = Consts.name + " " + Consts.version;
 	
+	public File data_directory;
+	
 	public const string resource_pack_name = "default";
 	public const string resources_location = "resources/" + Consts.resource_pack_name + "/";
 	public const string graphics_location = Consts.resources_location + "graphics/";
@@ -67,6 +69,18 @@ namespace Consts
 	public const int pos_frac_part = 256;
 	
 	public const bool debug = true;
+	
+	public void init()
+	{
+		Consts.data_directory = File.new_for_path(GLib.Path.build_filename(GLib.Environment.get_user_config_dir(), Consts.name.down()));
+		if (Consts.data_directory.query_exists() != true)
+		{
+			//Create it since it doesn't exist.
+			Consts.output("Creating the data directory since it does not exist.");
+			Consts.data_directory.make_directory();
+		}
+		Consts.output("The data directory is " + Consts.data_directory.get_path());
+	}
 	
 	public void output(string message, string type = "DEBUG")
 	{

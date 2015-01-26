@@ -275,7 +275,7 @@ class World : Object
 	public List<Entity> entities;
 	public Player player;
 	
-	public List<Particle> particles;
+	public DynamicList<Particle> particles;
 	
 	public EventManager event_manager;
 	
@@ -308,7 +308,7 @@ class World : Object
 		this.entities.append(someguy);
 		
 		//The particles
-		this.particles = new List<Particle>();
+		this.particles = new DynamicList<Particle>();
 		
 		//The event manager
 		this.event_manager = new EventManager(this);
@@ -435,14 +435,13 @@ class World : Object
 			this.entities.nth_data(count).tick();
 		
 		//Tick all particles
-		for (int count = 0; count < this.particles.length(); count ++)
+		for (int count = 0; count < this.particles.length; count ++)
 		{
-			this.particles.nth_data(count).tick();
+			this.particles[count].tick();
 			
-			if (this.particles.nth_data(count).lifetime <= 0)
+			if (this.particles[count].lifetime <= 0)
 			{
-				unowned List<Particle> todelete = this.particles.nth(count);
-				this.particles.delete_link(todelete);
+				this.particles.remove_at(count);
 				count -= 1;
 			}
 		}
@@ -454,6 +453,7 @@ class World : Object
 		this.event_manager.update();
 	}
 	
+	//This has no relation to either cabbages or mewing, how disappointing.
 	public void end()
 	{
 		this.checkForUnload(true);

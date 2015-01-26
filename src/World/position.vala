@@ -146,6 +146,10 @@ class Position
 			this._x = 0;
 		if (this._y < 0)
 			this._y = 0;
+		if (this._x > Consts.world_size_pixels)
+			this._x = Consts.world_size_pixels;
+		if (this._y > Consts.world_size_pixels)
+			this._y = Consts.world_size_pixels;
 	}
 	
 	public void tick()

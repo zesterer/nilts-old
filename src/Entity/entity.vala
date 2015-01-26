@@ -25,11 +25,15 @@ class Entity : Object
 class NPC : Entity
 {
 	public string real_name;
+	public ObjectProperties properties;
 	
 	public NPC(uint32 seed, World mother)
 	{
 		base(seed, mother);
 		this.real_name = NameGenerator.generateRandom(this.seed) + " " + NameGenerator.generateRandom(this.seed + 1);
+		
+		this.properties = new ObjectProperties();
+		
 		if (Consts.debug)
 			Consts.output("An entity with the name of " + this.real_name.to_string() + " is created.");
 	}
@@ -43,8 +47,8 @@ class NPC : Entity
 		
 		if (dist > 200)
 		{
-			x = 2 * (double)(this.mother.player.pos.x - this.pos.x) / (double)dist;
-			y = 2 * (double)(this.mother.player.pos.y - this.pos.y) / (double)dist;
+			x = 0.8 * (double)(this.mother.player.pos.x - this.pos.x) / (double)dist;
+			y = 0.8 * (double)(this.mother.player.pos.y - this.pos.y) / (double)dist;
 		}
 		
 		if (dist > 100)
@@ -61,28 +65,37 @@ class NPC : Entity
 	
 	public void createParticles()
 	{
-		if (this.mother.tick_counter % 10 < 2)
+		if (this.mother.tick_counter % 1 < 2)
 		{
 			Position pos = new Position(this.pos.x, this.pos.y);
 			GLib.Rand ran = new GLib.Rand.with_seed(this.seed + (int32)this.mother.tick_counter);
 			//Randomise the position
 			pos.add(ran.double_range(-0.4, 0.4), ran.double_range(-0.4, 0.4));
 			SFML.Graphics.Color col = {165, 155, 85, 255};
-			if (this.pos.z <= 0)
+			if (this.mother.getCell(this.pos.x, this.pos.y).altitude <= 0)
 			{
-				col = {200, 200, 250, 50};
-				pos.accelerate(ran.double_range(-0.6, 0.6), ran.double_range(-0.6, 0.6));
+				col = {200, 200, 250, 200};
+				pos.accelerate(ran.double_range(-1.6, 1.6), ran.double_range(-1.6, 1.6));
 				for (int c = 0; c < 4; c ++)
 				{
 					Position pos1 = new Position(this.pos.x, this.pos.y);
 					pos1.accelerate(ran.double_range(-0.3, 0.3), ran.double_range(-0.3, 0.3));
 					pos1.add(ran.double_range(-8, 8), ran.double_range(-8, 8));
-					this.mother.particles.append(new Particle(pos1, col, 60, 4));
+					this.mother.particles.add(new Particle(pos1, col, 60, 2));
 				}
 			}
 			else if (GroundTypes.types[this.mother.getCell(this.pos.x, this.pos.y).ground_type].name == "grass")
+			{
 				col = {15, 55, 15, 255};
-			this.mother.particles.append(new Particle(pos, col, 240, 4));
+				if (this.mother.tick_counter % 10 < 2)
+					this.mother.particles.add(new Particle(pos, col, 240, 4));
+			}
+			else
+			{
+				col = {165, 155, 85, 255};
+				if (this.mother.tick_counter % 10 < 2)
+					this.mother.particles.add(new Particle(pos, col, 240, 4));
+			}
 		}
 	}
 }

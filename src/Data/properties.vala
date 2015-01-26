@@ -1,9 +1,9 @@
-class Properties : Object
+public class ObjectProperties : Object
 {
 	private Gee.HashMap<string, int32> map_int;
 	private Gee.HashMap<string, string> map_string;
 	
-	public Properties()
+	public ObjectProperties()
 	{
 		this.map_int = new Gee.HashMap<string, int32>();
 		this.map_string =  new Gee.HashMap<string, string>();
@@ -31,5 +31,14 @@ class Properties : Object
 	public void setStr(string key, string data)
 	{
 		this.map_string[key] = data;
+	}
+	
+	public void setFromNMLObject(NMLObject object, string [] convert_format = {""})
+	{
+		string[] properties_list = object.getPropertyList();
+		for (int count = 0; count < properties_list.length; count ++)
+		{
+			this.setStr(properties_list[count], object.getProperty(properties_list[count]));
+		}
 	}
 }

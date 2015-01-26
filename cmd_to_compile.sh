@@ -23,6 +23,9 @@ src/Data/properties.vala \
 src/Data/items.vala \
 src/Data/inventory.vala \
 src/Data/parser.vala \
+src/Data/nmlparser.vala \
+src/Data/modloader.vala \
+src/Data/mods.vala \
 src/consts.vala \
 -C
 
@@ -53,6 +56,9 @@ src/Data/properties.c \
 src/Data/items.c \
 src/Data/inventory.c \
 src/Data/parser.c \
+src/Data/nmlparser.c \
+src/Data/modloader.c \
+src/Data/mods.c \
 src/consts.c \
  -Ilibraries/CSFML-2.1/include -Ilibraries/gee/include -Ilibraries/glib2/include
 
@@ -79,6 +85,9 @@ properties.o \
 items.o \
 inventory.o \
 parser.o \
+nmlparser.o \
+modloader.o \
+mods.o \
 consts.o \
 -lgee-0.8 -lgobject-2.0 -lglib-2.0 -lgio-2.0 -Llibraries/gee/lib -Llibraries/shared-lib -lcsfml-window -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-network -lm \
 -fsanitize=address

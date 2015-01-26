@@ -164,7 +164,7 @@ namespace Render
 			draw_position = {(float)(Consts.cell_size / 2), (float)(Consts.cell_size / 2)};
 			cellsprite.set_origin(draw_position);
 			
-			cellsprite.set_texture(Textures.types[10], true);
+			cellsprite.set_texture(Textures.types.nth_data(10), true);
 			
 			window.draw_sprite(cellsprite, null);
 		}
@@ -177,10 +177,10 @@ namespace Render
 		
 		Particle particle;
 		
-		for (int x = 0; x < world.particles.length(); x ++)
+		for (int x = 0; x < world.particles.length; x ++)
 		{
 			//define the entity for convenience
-			particle = world.particles.nth_data(x);
+			particle = world.particles[x];
 			
 			//Create the particle sprite
 			SFML.Graphics.CircleShape particle_shape = new SFML.Graphics.CircleShape();

@@ -190,7 +190,7 @@ class Region : Object
 				cellsprite.set_position(position);
 				
 				//Set the texture
-				cellsprite.set_texture(Textures.types[GroundTypes.types[cell.ground_type].texture_number], true);
+				cellsprite.set_texture(Textures.types.nth_data(GroundTypes.types[cell.ground_type].texture_number), true);
 				cellsprite.set_origin({Consts.cell_size / 2, Consts.cell_size / 2});
 				
 				//The default scale and rotation
@@ -235,6 +235,7 @@ class Region : Object
 				//Draw the ground finally!
 				this._texture.draw_sprite(cellsprite, null);
 				
+				//Draw water below z = 0
 				if (cell.altitude <= 0)
 				{
 					//Reset the cellsprite
@@ -242,7 +243,7 @@ class Region : Object
 					cellsprite.set_rotation(0);
 				
 					//Set to the water texture
-					cellsprite.set_texture(Textures.types[3], true);
+					cellsprite.set_texture(Textures.types.nth_data(3), true);
 				
 					//Draw the water
 					this._texture.draw_sprite(cellsprite, null);
@@ -251,7 +252,6 @@ class Region : Object
 		}
 		
 		this._texture.display();
-		
 		this._texture.set_active(false);
 		this.renderHasBeenCalled = false;
 		this.texture_empty = false;
@@ -276,4 +276,21 @@ struct Cell
 	
 	public double temperature;
 	public double altitude;
+	
+	public string saveToString()
+	{
+		return (@"$(this.seed)|=|$(this.ground_type)|=|$(this.block_type)|=|$(this.temperature)|=|$(this.altitude)");
+		//return string.join("|=|", this.seed.to_string(), this.block_type.to_string(), this.temperature.to_string(), this.altitude.to_string());
+	}
+	
+	public void loadFromString(string data)
+	{
+		string[] values = data.split("|=|");
+		//Why the crap do the uint32 and int16 data types not have a .parse() method? It's f*cking stupid...
+		this.seed = (uint32)uint64.parse(values[0]);
+		this.ground_type = (int16)uint64.parse(values[1]);
+		this.block_type = (int16)uint64.parse(values[2]);
+		this.temperature = double.parse(values[3]);
+		this.altitude = double.parse(values[4]);
+	}
 }

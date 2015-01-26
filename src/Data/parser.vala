@@ -1,9 +1,15 @@
-class NMLParser : Object
+public class NNMLParser : Object
 {
 	private List<NMLParserObject> data;
 	private string filename;
 	
-	public NMLParser()
+	public signal void createNewObject();
+	public signal void setObjectName(string name);
+	public signal void setObjectProperty(string id, string data);
+	public signal void endObject();
+	public signal void objectAdded(NMLParserObject object);
+	
+	public NNMLParser()
 	{
 		this.data = new List<NMLParserObject>();
 	}
@@ -51,9 +57,7 @@ class NMLParser : Object
 	{
 		this.data = new List<NMLParserObject>();
 		
-		string[] lines = data.split("\n");
-		
-		Consts.output("The string to parse is:\n" + data, "INFO");
+		string[] lines = data.split("\n");;
 		
 		NMLParserObject object = new NMLParserObject("null");;
 		for (int count = 0; count < lines.length; count ++)
@@ -62,26 +66,31 @@ class NMLParser : Object
 			
 			if (legal_string.length > 0)
 			{
-				Consts.output("Segment: " + legal_string);
+				//Consts.output("Segment: " + legal_string);
 				
 				if (legal_string == "{")
 				{
 					object = new NMLParserObject("");
+					this.createNewObject();
 				}
 				else if (legal_string == "}")
 				{
 					this.data.append(object);
+					this.endObject();
+					this.objectAdded(object);
 				}
 				else if (legal_string[0].to_string() == "$")
 				{
 					object.name = legal_string[1:legal_string.length];
-					Consts.output("The object name is set to " + object.name);
+					//Consts.output("The object name is set to " + object.name);
+					this.setObjectName(object.name);
 				}
 				else if ("=" in legal_string)
 				{
 					string[] elements = this.propertyGetElements(legal_string);
 					object.properties.append(new NMLParserProperty(elements[0], elements[1]));
-					Consts.output("The property with name " + elements[0] + " is set to " + elements[1] + " in the object " + object.name);
+					//Consts.output("The property with name " + elements[0] + " is set to " + elements[1] + " in the object " + object.name);
+					this.setObjectProperty(elements[0], elements[1]);
 				}
 				else
 				{
@@ -121,6 +130,18 @@ class NMLParser : Object
 		return {line[0:first_count + 1], line[last_count:line.length]};
 	}
 	
+	public string[] getObjectNames()
+	{
+		string[] data = new string[this.data.length()];
+		
+		for (int x = 0; x < this.data.length(); x ++)
+		{
+			data[x] = this.data.nth_data(x).name;
+		}
+		
+		return data;
+	}
+	
 	public NMLParserObject? getObject(string name)
 	{
 		for (int x = 0; x < this.data.length(); x ++)
@@ -133,15 +154,23 @@ class NMLParser : Object
 	}
 }
 
-class NMLParserObject
+public class NMLParserObject
 {
-	public string name;
+	private string _name;
 	public List<NMLParserProperty> properties;
 	
 	public NMLParserObject(string name)
 	{
-		this.name = name;
+		this._name = name;
 		this.properties = new List<NMLParserProperty>();
+	}
+	
+	public string name
+	{
+		get
+		{return this._name;}
+		set
+		{this._name = value;}
 	}
 	
 	public string getProperty(string id)
@@ -154,9 +183,14 @@ class NMLParserObject
 		
 		return "null";
 	}
+	
+	public int32 getPropertyInt(string id)
+	{
+		return (int32)int64.parse(this.getProperty(id));
+	}
 }
 
-class NMLParserProperty
+public class NMLParserProperty
 {
 	public string id;
 	public string data;
