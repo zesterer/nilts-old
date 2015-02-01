@@ -171,4 +171,16 @@ Trousers
 Smock
 Cloak
 
+New Content System
+==================
 
+As each piece of content is loaded, it gets put into a list and assigned two things:
+- id
+- name
+
+To find a piece of content from any of NILTS except the cell data, use it's name.
+To find a piece of content from any of the cell data parts, you must use it's id.
+
+This means that the id data log and the loaded mods must be saved on game save. Once
+a save is created, it can only use the mods it was created with and REQUIRES all of
+them.
