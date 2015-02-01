@@ -1,4 +1,6 @@
-![alt tag](https://raw.githubusercontent.com/zesterer/nilts/master/documents/nilts-sign-small.png "Possibly the NILTS title graphic.") # NILTS
+# NILTS
+![alt tag](https://raw.githubusercontent.com/zesterer/nilts/master/documents/nilts-sign-small.png "Possibly the NILTS title graphic.")
+
 A game about many things. I don't know what, since most content is randomly generated.
 
 ## What is NILTS?
