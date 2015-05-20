@@ -27,6 +27,7 @@ src/Data/nmlparser.vala \
 src/Data/modloader.vala \
 src/Data/mods.vala \
 src/consts.vala \
+src/dynamiclist.vala \
 -C
 
 #Optional! Add:
@@ -60,6 +61,7 @@ src/Data/nmlparser.c \
 src/Data/modloader.c \
 src/Data/mods.c \
 src/consts.c \
+src/dynamiclist.c \
  -Ilibraries/CSFML-2.1/include -Ilibraries/gee/include -Ilibraries/glib2/include
 
 #3)
@@ -89,6 +91,7 @@ nmlparser.o \
 modloader.o \
 mods.o \
 consts.o \
+dynamiclist.o \
 -lgee-0.8 -lgobject-2.0 -lglib-2.0 -lgio-2.0 -Llibraries/gee/lib -Llibraries/shared-lib -lcsfml-window -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-network -lm \
 -fsanitize=address
 
